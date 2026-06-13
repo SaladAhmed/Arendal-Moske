@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="so" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arendal Moske</title>
+<meta name="description" content="Arendal Moske — waqtiyada salaadda, munaasabadaha, barashada Qur'aanka. Soomaali · Norsk · English · العربية"/>
+<meta property="og:title" content="Arendal Moske"/>
+<meta property="og:description" content="Xarunta diiniga ah ee bulshada Muslimka ee Arendal."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#064e3b;--green2:#065f46;--green3:#047857;--green4:#10b981;
+  --amber:#fbbf24;--amber2:#f59e0b;
+  --bg:#fdfbf5;--stone:#78716c;--stone2:#44403c;--stone3:#1c1917;
+}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--stone3);min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* ===== HEADER ===== */
+header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:10px;height:58px}
+.logo{font-weight:800;font-size:18px;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.logo span:first-child{font-size:24px}
+.nav-links{display:flex;gap:2px;flex:1;justify-content:center}
+.nav-links a{padding:6px 10px;border-radius:6px;font-size:13px;color:#a7f3d0;transition:background .15s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.on{background:rgba(255,255,255,.16);color:#fff}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.donate-pill{background:var(--amber);color:#064e3b;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.donate-pill:hover{background:var(--amber2)}
+
+/* lang */
+.lang-wrap{position:relative}
+.lang-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:5px 10px;border-radius:6px;font-size:13px;cursor:pointer;color:#ecfdf5;white-space:nowrap}
+.lang-btn:hover{background:rgba(255,255,255,.22)}
+.lang-drop{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.15);min-width:155px;overflow:hidden;z-index:300}
+.lang-drop.open{display:block}
+.lang-drop button{width:100%;text-align:left;padding:9px 14px;font-size:13px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;color:#1c1917}
+.lang-drop button:hover{background:#f0fdf4}
+.lang-drop button.sel{background:#dcfce7;font-weight:600}
+
+/* mobile nav */
+.mob-nav{display:none;background:var(--green);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto}
+.mob-nav-inner{display:flex;gap:2px;padding:6px 12px;white-space:nowrap}
+.mob-nav-inner a{padding:5px 10px;border-radius:5px;font-size:12px;color:#a7f3d0}
+.mob-nav-inner a:hover,.mob-nav-inner a.on{background:rgba(255,255,255,.16);color:#fff}
+
+/* ===== PAGES ===== */
+.page{display:none;flex:1}
+.page.active{display:block}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(135deg,#022c22 0%,#064e3b 50%,#065f46 100%);color:#fff;padding:90px 16px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.hero-inner{position:relative;max-width:820px;margin:0 auto}
+.hero-bism{color:var(--amber);font-size:14px;letter-spacing:.08em;margin-bottom:14px;direction:rtl}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;margin-bottom:14px;line-height:1.1}
+.hero p{font-size:clamp(1rem,2vw,1.2rem);color:#a7f3d0;max-width:620px;margin:0 auto 32px;line-height:1.65}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-amber{background:var(--amber);color:#064e3b;padding:13px 28px;border-radius:9px;font-weight:700;font-size:15px;transition:background .15s;cursor:pointer;border:none}
+.btn-amber:hover{background:var(--amber2)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;padding:13px 28px;border-radius:9px;font-size:15px;border:1.5px solid rgba(255,255,255,.28);cursor:pointer;transition:background .15s}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+
+/* ===== COMMON ===== */
+.wrap{max-width:1140px;margin:0 auto;padding:64px 16px}
+.wrap-sm{max-width:780px;margin:0 auto;padding:52px 16px}
+.sec-title{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;color:var(--green);margin-bottom:8px}
+.sec-sub{color:var(--stone);font-size:15px;margin-bottom:36px}
+
+/* ===== CARDS ===== */
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:#fff;border:1px solid #e7e5e4;border-radius:18px;padding:26px;transition:box-shadow .15s}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,.09)}
+.card-ico{font-size:2.4rem;margin-bottom:12px}
+.card h3{font-size:17px;font-weight:700;color:var(--green);margin-bottom:6px}
+.card p{font-size:14px;color:var(--stone);line-height:1.65}
+
+/* ===== CTA BAND ===== */
+.cta-band{background:#ecfdf5;border-top:1px solid #bbf7d0;border-bottom:1px solid #bbf7d0;text-align:center}
+.btn-green{display:inline-block;background:var(--green2);color:#fff;padding:13px 30px;border-radius:9px;font-weight:700;font-size:15px;transition:background .15s}
+.btn-green:hover{background:var(--green)}
+
+/* ===== PAGE HEADER ===== */
+.pg-hdr{background:var(--green);color:#fff;padding:56px 16px}
+.pg-hdr-inner{max-width:860px;margin:0 auto}
+.pg-hdr h1{font-size:clamp(1.9rem,4vw,3rem);font-weight:900;margin-bottom:8px}
+.pg-hdr p{color:#a7f3d0;font-size:16px}
+
+/* ===== PRAYER ===== */
+.prayer-table{width:100%;background:#fff;border:1px solid #e7e5e4;border-radius:18px;overflow:hidden;border-collapse:collapse}
+.prayer-table th{background:#ecfdf5;color:var(--green);padding:14px 20px;font-size:13px;font-weight:600;text-align:left}
+.prayer-table td{padding:14px 20px;border-top:1px solid #f5f5f4}
+.prayer-table tr:hover td{background:#fafaf9}
+.p-name{font-weight:600;color:var(--stone3)}
+.p-ar{font-size:12px;color:var(--stone);direction:rtl}
+.p-time{font-family:monospace;font-size:16px}
+.p-adhan{color:var(--stone2)}
+.p-iqama{color:var(--green2);font-weight:700}
+.pr-note{text-align:center;font-size:13px;color:var(--stone);margin:14px 0}
+.jumua-box{background:#fffbeb;border:1px solid #fde68a;border-radius:14px;padding:22px 26px;margin-top:24px}
+.jumua-box h3{color:#92400e;font-weight:700;margin-bottom:6px;font-size:16px}
+
+/* ===== EVENTS ===== */
+.ev-list{display:flex;flex-direction:column;gap:16px}
+.ev-card{background:#fff;border:1px solid #e7e5e4;border-radius:14px;padding:20px 24px;display:flex;gap:20px;align-items:flex-start}
+.ev-badge{background:#ecfdf5;color:var(--green2);border-radius:9px;padding:10px 14px;text-align:center;flex-shrink:0;min-width:82px}
+.ev-badge-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--green3)}
+.ev-badge-day{font-weight:700;font-size:13px;margin-top:3px}
+.ev-body h3{font-weight:700;color:var(--green);font-size:16px;margin-bottom:4px}
+.ev-time{font-size:13px;color:var(--stone);margin-bottom:5px}
+.ev-desc{font-size:14px;color:var(--stone2);line-height:1.6}
+
+/* ===== DONATE ===== */
+.don-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:20px}
+.don-card{border-radius:18px;padding:30px;color:#fff;display:block;transition:transform .15s}
+.don-card:hover{transform:translateY(-3px)}
+.don-card.vipps{background:#ff5b24}
+.don-card.stripe{background:var(--green2)}
+.don-card h3{font-size:22px;font-weight:800;margin-bottom:8px}
+.don-card p{opacity:.9;font-size:14px;margin-bottom:18px;line-height:1.5}
+.don-pill{display:inline-block;background:#fff;padding:8px 18px;border-radius:8px;font-weight:600;font-size:14px}
+.don-card.vipps .don-pill{color:#ff5b24}
+.don-card.stripe .don-pill{color:var(--green2)}
+.bank-box{background:#fff;border:2px dashed #6ee7b7;border-radius:18px;padding:28px;margin-bottom:20px}
+.bank-box h3{font-size:18px;font-weight:700;color:var(--green);margin-bottom:8px}
+.bank-box p{color:var(--stone2);font-size:14px;margin-bottom:14px}
+.bank-num{background:#ecfdf5;border-radius:9px;padding:14px;font-family:monospace;font-size:22px;font-weight:700;color:var(--green);text-align:center;letter-spacing:.12em}
+.bank-label{text-align:center;font-size:13px;color:var(--stone);margin-top:10px}
+.ayah-box{background:#fffbeb;border:1px solid #fde68a;border-radius:18px;padding:30px;text-align:center}
+.ayah-ar{font-size:22px;color:var(--green);direction:rtl;font-family:Georgia,serif;line-height:1.9;margin-bottom:14px}
+.ayah-txt{font-size:14px;color:var(--stone2);font-style:italic;line-height:1.7}
+
+/* ===== CONTACT ===== */
+.con-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.con-card{background:#fff;border:1px solid #e7e5e4;border-radius:14px;padding:24px}
+.con-card .ico{font-size:2rem;margin-bottom:10px}
+.con-card h3{font-weight:700;color:var(--green);margin-bottom:6px;font-size:15px}
+.con-card p{font-size:14px;color:var(--stone2)}
+
+/* ===== ABOUT ===== */
+.about-body section{margin-bottom:36px}
+.about-body h2{font-size:20px;font-weight:700;color:var(--green);margin-bottom:10px}
+.about-body p{color:var(--stone2);line-height:1.8;font-size:15px}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+.svc-item{background:#fff;border:1px solid #e7e5e4;border-radius:9px;padding:13px 16px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--stone2)}
+.svc-chk{color:var(--green3);font-weight:700;flex-shrink:0}
+
+/* ===== GALLERY ===== */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.gallery-item{border-radius:14px;overflow:hidden;background:#e7e5e4;aspect-ratio:4/3;position:relative;cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:var(--green2)}
+.gallery-placeholder .gico{font-size:3rem;margin-bottom:8px}
+.gallery-placeholder p{font-size:13px;font-weight:500}
+/* lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:10px;object-fit:contain}
+.lb-close{position:absolute;top:20px;right:24px;font-size:32px;color:#fff;cursor:pointer;line-height:1}
+.lb-close:hover{color:var(--amber)}
+
+/* ===== HADITH / COMMUNITY ===== */
+.community-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.hadith-box{background:linear-gradient(135deg,#fffbeb,#ecfdf5);border:1px solid #bbf7d0;border-radius:18px;padding:30px}
+.hadith-ar{font-size:20px;color:var(--green);direction:rtl;font-family:Georgia,serif;line-height:1.9;margin-bottom:12px;text-align:center}
+.hadith-txt{font-size:14px;color:var(--stone2);text-align:center;font-style:italic}
+.social-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn-wa{background:#16a34a;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600}
+.btn-wa:hover{background:#15803d}
+.btn-fb{background:#2563eb;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600}
+.btn-fb:hover{background:#1d4ed8}
+
+/* ===== FOOTER ===== */
+footer{background:#022c22;color:#a7f3d0;margin-top:auto}
+.ft-inner{max-width:1140px;margin:0 auto;padding:44px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+.ft-brand{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px}
+.ft-desc{font-size:14px;line-height:1.65}
+.ft-col h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:10px}
+.ft-col p{font-size:13px;line-height:1.9}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;padding:16px;font-size:12px;color:#6ee7b7}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mob-nav{display:block}
+  .donate-pill{display:none}
+  .community-grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .hero{padding:56px 16px 52px}
+  .ev-card{flex-direction:column;gap:10px}
+}
+[dir=rtl] .prayer-table th,[dir=rtl] .prayer-table td{text-align:right}
+[dir=rtl] .lang-drop{right:auto;left:0}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <div class="logo" onclick="go('home')">
+      <span>🕌</span><span id="hdr-brand">Arendal Moske</span>
+    </div>
+    <nav class="nav-links" id="deskNav"></nav>
+    <div class="hdr-right">
+      <span class="donate-pill" onclick="go('donate')" id="hdr-donate">Deeq</span>
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLang()" id="langBtn">🇸🇴 Soomaali ▾</button>
+        <div class="lang-drop" id="langDrop">
+          <button onclick="setLang('so')">🇸🇴 Soomaali</button>
+          <button onclick="setLang('no')">🇳🇴 Norsk</button>
+          <button onclick="setLang('en')">🇬🇧 English</button>
+          <button onclick="setLang('ar')">🇸🇦 العربية</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mob-nav"><div class="mob-nav-inner" id="mobNav"></div></div>
+</header>
+
+<!-- ========== HOME ========== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-bism">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <h1 id="h-brand">Arendal Moske</h1>
+      <p id="h-sub">Xarunteena diineed — meel aan ku tukano, ku barano, kuna isku xirno bulshadeena Muslimka ah ee Arendal.</p>
+      <div class="hero-btns">
+        <button class="btn-amber" onclick="go('donate')" id="h-cta1">💚 Taageer Masaajidka</button>
+        <button class="btn-ghost" onclick="go('prayer')" id="h-cta2">Waqtiyada Salaadda</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cards3" id="home-cards"></div>
+  </div>
+
+  <div class="cta-band">
+    <div class="wrap" style="padding-top:52px;padding-bottom:52px">
+      <div class="sec-title" id="h-cta-t">Sida ugu fudud ee aad ku taageeri karto</div>
+      <p id="h-cta-d" style="color:#44403c;max-width:560px;margin:0 auto 24px;line-height:1.7"></p>
+      <a href="#" class="btn-green" onclick="go('donate');return false" id="h-donate-btn">Bixi Deeq Hadda</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="community-grid">
+      <div>
+        <div class="sec-title" id="h-join-t">Ku soo biir bulshadeena</div>
+        <p id="h-join-d" style="color:var(--stone);line-height:1.7;margin:10px 0 0"></p>
+        <div class="social-btns">
+          <a href="#" class="btn-wa">📱 WhatsApp</a>
+          <a href="#" class="btn-fb">📘 Facebook</a>
+        </div>
+      </div>
+      <div class="hadith-box">
+        <div class="hadith-ar">مَنْ بَنَىٰ مَسْجِدًا لِلَّهِ بَنَى اللَّهُ لَهُ بَيْتًا فِي الْجَنَّةِ</div>
+        <div class="hadith-txt" id="h-hadith"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<div class="page" id="page-about">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="ab-h">Ku Saabsan Masaajidka</h1>
+    <p id="ab-sub"></p>
+  </div></div>
+  <div class="wrap-sm">
+    <div class="about-body">
+      <section>
+        <h2 id="ab-m-t">Hadafkeena</h2>
+        <p id="ab-m-d"></p>
+      </section>
+      <section>
+        <h2 id="ab-v-t">Aragtideena</h2>
+        <p id="ab-v-d"></p>
+      </section>
+      <section>
+        <h2 id="ab-s-t">Adeegyada</h2>
+        <div class="svc-grid" id="svc-grid"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PRAYER ========== -->
+<div class="page" id="page-prayer">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="pr-h">Waqtiyada Salaadda</h1>
+    <p id="pr-date"></p>
+  </div></div>
+  <div class="wrap-sm">
+    <table class="prayer-table">
+      <thead><tr>
+        <th id="th-pr">Salaad</th>
+        <th id="th-ad" style="text-align:right">Adhan</th>
+        <th id="th-iq" style="text-align:right">Iqaamah</th>
+      </tr></thead>
+      <tbody id="pr-body"></tbody>
+    </table>
+    <p class="pr-note" id="pr-note"></p>
+    <div class="jumua-box">
+      <h3 id="ju-t">🕌 Salaadda Jimcaha</h3>
+      <p id="ju-d"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== EVENTS ========== -->
+<div class="page" id="page-events">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="ev-h">Munaasabadaha</h1>
+    <p id="ev-sub"></p>
+  </div></div>
+  <div class="wrap-sm">
+    <div class="ev-list" id="ev-list"></div>
+  </div>
+</div>
+
+<!-- ========== DONATE ========== -->
+<div class="page" id="page-donate">
+  <div class="pg-hdr" style="background:linear-gradient(135deg,#022c22,#065f46);text-align:center">
+    <div class="pg-hdr-inner">
+      <p id="don-kick" style="color:var(--amber);margin-bottom:8px">💚 Sadaqo Jaariyah</p>
+      <h1 id="don-h">Taageer Masaajidka Arendal</h1>
+      <p id="don-sub" style="color:#a7f3d0;max-width:520px;margin:10px auto 0;line-height:1.65"></p>
+    </div>
+  </div>
+  <div class="wrap-sm">
+    <div class="don-grid">
+      <a href="https://vipps.no/" target="_blank" rel="noreferrer" class="don-card vipps">
+        <h3>Vipps</h3>
+        <p id="don-vd"></p>
+        <span class="don-pill" id="don-vb">Ku bixi Vipps →</span>
+      </a>
+      <a href="https://stripe.com/" target="_blank" rel="noreferrer" class="don-card stripe">
+        <h3 id="don-ct">💳 Kaadh Bangi</h3>
+        <p id="don-cd"></p>
+        <span class="don-pill" id="don-cb">Ku bixi Kaadh →</span>
+      </a>
+    </div>
+    <div class="bank-box">
+      <h3 id="don-bt">🏦 Wareejin Bangi</h3>
+      <p id="don-bd"></p>
+      <div class="bank-num">1234.56.78901</div>
+      <p class="bank-label"><span id="don-bn">Magaca akoonka</span>: <strong>Arendal Moske</strong></p>
+    </div>
+    <div class="ayah-box">
+      <div class="ayah-ar">مَثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ</div>
+      <p class="ayah-txt" id="don-ay"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== GALLERY ========== -->
+<div class="page" id="page-gallery">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="gal-h">Sawirrada</h1>
+    <p id="gal-sub"></p>
+  </div></div>
+  <div class="wrap">
+    <div class="gallery-grid" id="gal-grid"></div>
+  </div>
+</div>
+
+<!-- ========== CONTACT ========== -->
+<div class="page" id="page-contact">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="con-h">Nala soo Xiriir</h1>
+    <p id="con-sub"></p>
+  </div></div>
+  <div class="wrap-sm">
+    <div class="con-grid" id="con-grid"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <span class="lb-close">✕</span>
+  <img id="lb-img" src="" alt=""/>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div>
+      <div class="ft-brand">🕌 <span id="ft-brand">Arendal Moske</span></div>
+      <p class="ft-desc" id="ft-desc"></p>
+    </div>
+    <div class="ft-col">
+      <h4 id="ft-con">Xiriir</h4>
+      <p>📍 Arendal, Norge<br>📧 info@arendal-moske.no</p>
+    </div>
+    <div class="ft-col">
+      <h4 id="ft-fol">Raac</h4>
+      <p>Facebook · WhatsApp</p>
+    </div>
+  </div>
+  <div class="ft-bottom">© <span id="yr"></span> Arendal Moske. <span id="ft-rights"></span></div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ===== TRANSLATIONS ===== */
+const T = {
+so:{
+  flag:'🇸🇴',label:'Soomaali',dir:'ltr',locale:'so-SO',
+  nav:['Bogga Hore','Ku Saabsan','Waqtiyada','Munaasabadaha','Deeq','Sawirrada','Xiriir'],
+  pages:['home','about','prayer','events','donate','gallery','contact'],
+  donate_nav:'Deeq',
+  brand:'Arendal Moske',
+  h_sub:'Xarunteena diineed — meel aan ku tukano, ku barano, kuna isku xirno bulshadeena Muslimka ah ee Arendal.',
+  h_cta1:'💚 Taageer Masaajidka', h_cta2:'Waqtiyada Salaadda',
+  h_cta_t:'Sida ugu fudud ee aad ku taageeri karto Masaajidka',
+  h_cta_d:'Masaajidkeenu waa xarunteena. Deeq yar oo joogto ah ayaa wax weyn beddesha.',
+  h_donate_btn:'Bixi Deeq Hadda',
+  h_join_t:'Ku soo biir bulshadeena',
+  h_join_d:'Raac wararkeena ugu dambeeyay WhatsApp iyo Facebook.',
+  h_hadith:'"Qofkii Allaah u dhista masaajid, Allaah wuxuu ugu dhisaa guri Jannada." — Bukhaari & Muslim',
+  feats:[
+    {ico:'🕌',t:'Salaadaha Shanta',d:'Salaadaha jamaaca ee maalin walba, oo ay ku jiraan Jimcaha.'},
+    {ico:'📖',t:"Dugsi Qur'aan",d:'Barashada Quraanka iyo cilmiga diinta carruurta iyo dadka waaweyn.'},
+    {ico:'🤝',t:'Bulshada',d:'Munaasabado, kulamo, iyo barnaamijyo bulsho oo sanadka oo dhan socda.'},
+  ],
+  ab_h:'Ku Saabsan Masaajidka', ab_sub:'Xarunta diiniga ah ee Muslimiinta Arendal.',
+  ab_m_t:'Hadafkeena', ab_m_d:'Waxaan abuurnaa xarun diin oo bulsho oo loogu adeego Muslimiinta Arendal: salaadaha jamaaca, barashada Quraanka iyo cilmiga shareecada, iyo barnaamijyo bulsho.',
+  ab_v_t:'Aragtideena', ab_v_d:'Bulsho Muslim ah oo midaysan, oo ku noolaata Islaamka saxda ah.',
+  ab_s_t:'Adeegyada',
+  svcs:['Salaadaha shanta waqti','Salaadda Jimcaha','Dugsiga Quraanka carruurta','Darsyo cilmi diineed','Aroosyo iyo nikaax','Janaaso iyo daryeel'],
+  pr_h:'Waqtiyada Salaadda', th_pr:'Salaad', th_ad:'Adhan', th_iq:'Iqaamah',
+  pr_note:'Waqtiyadu way isbeddeli karaan. Hubi WhatsApp groupkeena.',
+  ju_t:'🕌 Salaadda Jimcaha', ju_d:'Khudbada: <strong>13:00</strong> · Salaadda: <strong>13:30</strong>',
+  prayers:[
+    {n:'Fajr',ar:'الفجر',ad:'04:30',iq:'04:45'},
+    {n:'Dhuhr',ar:'الظهر',ad:'13:00',iq:'13:15'},
+    {n:'Asr',ar:'العصر',ad:'17:00',iq:'17:15'},
+    {n:'Maghrib',ar:'المغرب',ad:'21:00',iq:'21:10'},
+    {n:'Isha',ar:'العشاء',ad:'23:00',iq:'23:15'},
+  ],
+  ev_h:'Munaasabadaha', ev_sub:'Wax aan u baahnahay in aad ka warhayso.', ev_day:'Maalin',
+  events:[
+    {day:'Jimcaha',t:'Khudbada Jimcaha',time:'13:00',d:'Khudbo asbuuc ah oo ku saabsan mawduucyo diineed iyo bulsho.'},
+    {day:'Sabtida',t:"Dugsiga Qur'aanka",time:'10:00–13:00',d:'Carruurta — barashada akhriska Quraanka iyo tajwiidka.'},
+    {day:'Axadda',t:'Dars Cilmi',time:'19:30',d:'Dars toddobaadle ah oo ku saabsan Aqiidada iyo Fiqhiga.'},
+    {day:'Bisha soo socota',t:'Iftaar Wadajir',time:'Maghrib',d:'Iftaar bulsho oo loogu talagalay dhammaan walaalaha.'},
+  ],
+  don_kick:'💚 Sadaqo Jaariyah', don_h:'Taageer Masaajidka Arendal',
+  don_sub:'Deeqdaadu waxay ka caawisaa in aan sii furnaano, baray Quraanka, oo aan u adeegno bulshadeena.',
+  don_vd:'Ku bixi si fudud Vipps - hal guji.', don_vb:'Ku bixi Vipps →',
+  don_ct:'💳 Kaadh Bangi', don_cd:'Visa, Mastercard — meesha aad joogto.', don_cb:'Ku bixi Kaadh →',
+  don_bt:'🏦 Wareejin Bangi', don_bd:'U wareeji si toos ah akoonkeena bangiga:', don_bn:'Magaca akoonka',
+  don_ay:'"Tusaalaha kuwa ku bixiya maalkooda jidka Allaah waa sida iniin soo bixisay toddoba sabuul." — Al-Baqarah 2:261',
+  gal_h:'Sawirrada', gal_sub:'Munaasabadaha iyo xuska ee Arendal Moske.',
+  gal_items:['Masaajidka','Salaadda Jimcaha','Dugsiga Quraanka','Iftaarka','Munaasabadaha','Bulshada'],
+  con_h:'Nala soo Xiriir', con_sub:"Su'aalo? Waan ku jeclaan lahayn in aan ka maqalno.",
+  contacts:[
+    {ico:'📍',t:'Ciwaan',v:'Arendal, Norge'},
+    {ico:'📧',t:'Iimayl',v:'info@arendal-moske.no'},
+    {ico:'📱',t:'WhatsApp',v:'Ku soo biir group-keena'},
+    {ico:'📘',t:'Facebook',v:'Arendal Moske'},
+  ],
+  ft_desc:'Xarunta diiniga ah ee bulshada Muslimiinta ee Arendal.',
+  ft_con:'Xiriir', ft_fol:'Raac', ft_rights:'Dhammaan xuquuqdu way xifdisan tahay.',
+},
+no:{
+  flag:'🇳🇴',label:'Norsk',dir:'ltr',locale:'nb-NO',
+  nav:['Hjem','Om oss','Bønnetider','Arrangementer','Donasjon','Galleri','Kontakt'],
+  pages:['home','about','prayer','events','donate','gallery','contact'],
+  donate_nav:'Donasjon', brand:'Arendal Moske',
+  h_sub:'Vårt religiøse sentrum — et sted for bønn, læring og fellesskap for muslimene i Arendal.',
+  h_cta1:'💚 Støtt moskeen', h_cta2:'Bønnetider',
+  h_cta_t:'Den enkleste måten å støtte moskeen på',
+  h_cta_d:'Moskeen er vårt sentrum. En liten, regelmessig donasjon utgjør en stor forskjell.',
+  h_donate_btn:'Doner nå',
+  h_join_t:'Bli med i fellesskapet',
+  h_join_d:'Følg oss på WhatsApp og Facebook for siste nytt.',
+  h_hadith:'"Den som bygger en moské for Allah, bygger Allah et hus til ham i paradiset." — Bukhari & Muslim',
+  feats:[
+    {ico:'🕌',t:'De fem daglige bønnene',d:'Daglige fellesbønner, inkludert fredagsbønn.'},
+    {ico:'📖',t:'Koranskole',d:'Koran- og religionsundervisning for barn og voksne.'},
+    {ico:'🤝',t:'Fellesskap',d:'Arrangementer, samlinger og fellesskapsprogrammer hele året.'},
+  ],
+  ab_h:'Om moskeen', ab_sub:'Det religiøse senteret for muslimene i Arendal.',
+  ab_m_t:'Vårt oppdrag', ab_m_d:'Vi skaper et religiøst og sosialt senter for muslimene i Arendal: fellesbønner, koran- og sharia-undervisning, og fellesskapsprogrammer.',
+  ab_v_t:'Vår visjon', ab_v_d:'Et forent muslimsk fellesskap som lever etter ekte islam.',
+  ab_s_t:'Tjenester',
+  svcs:['De fem daglige bønnene','Fredagsbønn','Koranskole for barn','Religiøse forelesninger','Bryllup og nikah','Begravelse og omsorg'],
+  pr_h:'Bønnetider', th_pr:'Bønn', th_ad:'Adhan', th_iq:'Iqamah',
+  pr_note:'Tidene kan endres. Sjekk WhatsApp-gruppen vår.',
+  ju_t:'🕌 Fredagsbønn', ju_d:'Khutbah: <strong>13:00</strong> · Bønn: <strong>13:30</strong>',
+  prayers:[
+    {n:'Fajr',ar:'الفجر',ad:'04:30',iq:'04:45'},
+    {n:'Dhuhr',ar:'الظهر',ad:'13:00',iq:'13:15'},
+    {n:'Asr',ar:'العصر',ad:'17:00',iq:'17:15'},
+    {n:'Maghrib',ar:'المغرب',ad:'21:00',iq:'21:10'},
+    {n:'Isha',ar:'العشاء',ad:'23:00',iq:'23:15'},
+  ],
+  ev_h:'Arrangementer', ev_sub:'Hold deg oppdatert.', ev_day:'Dag',
+  events:[
+    {day:'Fredag',t:'Fredagsbønn',time:'13:00',d:'Ukentlig preken om religiøse og samfunnsmessige temaer.'},
+    {day:'Lørdag',t:'Koranskole',time:'10:00–13:00',d:'Barn — koranlesing og tajwid.'},
+    {day:'Søndag',t:'Religiøs forelesning',time:'19:30',d:'Ukentlig undervisning i aqida og fiqh.'},
+    {day:'Neste måned',t:'Felles Iftar',time:'Maghrib',d:'Felles iftar for alle søsken.'},
+  ],
+  don_kick:'💚 Sadaqah Jariyah', don_h:'Støtt Arendal Moske',
+  don_sub:'Din donasjon hjelper oss å holde åpent, undervise Koranen og tjene fellesskapet.',
+  don_vd:'Betal enkelt med Vipps – ett klikk.', don_vb:'Betal med Vipps →',
+  don_ct:'💳 Bankkort', don_cd:'Visa, Mastercard — uansett hvor du er.', don_cb:'Betal med kort →',
+  don_bt:'🏦 Bankoverføring', don_bd:'Overfør direkte til vår bankkonto:', don_bn:'Kontonavn',
+  don_ay:'"De som gir av sin formue for Allahs sak, er som et korn som vokser frem syv aks." — Al-Baqarah 2:261',
+  gal_h:'Galleri', gal_sub:'Bilder fra moskeen og fellesskapet.',
+  gal_items:['Moskeen','Fredagsbønn','Koranskole','Iftar','Arrangementer','Fellesskap'],
+  con_h:'Kontakt oss', con_sub:'Spørsmål? Vi hører gjerne fra deg.',
+  contacts:[
+    {ico:'📍',t:'Adresse',v:'Arendal, Norge'},
+    {ico:'📧',t:'E-post',v:'info@arendal-moske.no'},
+    {ico:'📱',t:'WhatsApp',v:'Bli med i gruppen vår'},
+    {ico:'📘',t:'Facebook',v:'Arendal Moske'},
+  ],
+  ft_desc:'Det religiøse senteret for det muslimske fellesskapet i Arendal.',
+  ft_con:'Kontakt', ft_fol:'Følg oss', ft_rights:'Alle rettigheter forbeholdt.',
+},
+en:{
+  flag:'🇬🇧',label:'English',dir:'ltr',locale:'en-GB',
+  nav:['Home','About','Prayer Times','Events','Donate','Gallery','Contact'],
+  pages:['home','about','prayer','events','donate','gallery','contact'],
+  donate_nav:'Donate', brand:'Arendal Mosque',
+  h_sub:"Our religious center — a place to pray, learn, and connect as a Muslim community in Arendal.",
+  h_cta1:'💚 Support the Mosque', h_cta2:'Prayer Times',
+  h_cta_t:'The easiest way to support the Mosque',
+  h_cta_d:'Our mosque is our center. A small, regular donation makes a big difference.',
+  h_donate_btn:'Donate Now',
+  h_join_t:'Join our community',
+  h_join_d:'Follow our updates on WhatsApp and Facebook.',
+  h_hadith:'"Whoever builds a mosque for Allah, Allah will build for him a house in Paradise." — Bukhari & Muslim',
+  feats:[
+    {ico:'🕌',t:'Five Daily Prayers',d:"Daily congregational prayers, including Jumu'ah."},
+    {ico:'📖',t:"Qur'an School",d:"Qur'an and Islamic studies for children and adults."},
+    {ico:'🤝',t:'Community',d:'Events, gatherings and community programs all year round.'},
+  ],
+  ab_h:'About the Mosque', ab_sub:"The religious center for the Muslim community in Arendal.",
+  ab_m_t:'Our Mission', ab_m_d:"We provide a religious and community center for Arendal's Muslims: congregational prayers, Qur'an and Islamic studies, and community programs.",
+  ab_v_t:'Our Vision', ab_v_d:'A united Muslim community living by authentic Islam.',
+  ab_s_t:'Services',
+  svcs:['Five daily prayers',"Jumu'ah prayer","Children's Qur'an school",'Islamic lectures','Weddings & nikah','Funerals & care'],
+  pr_h:'Prayer Times', th_pr:'Prayer', th_ad:'Adhan', th_iq:'Iqamah',
+  pr_note:'Times may change. Check our WhatsApp group.',
+  ju_t:"🕌 Jumu'ah Prayer", ju_d:'Khutbah: <strong>13:00</strong> · Prayer: <strong>13:30</strong>',
+  prayers:[
+    {n:'Fajr',ar:'الفجر',ad:'04:30',iq:'04:45'},
+    {n:'Dhuhr',ar:'الظهر',ad:'13:00',iq:'13:15'},
+    {n:'Asr',ar:'العصر',ad:'17:00',iq:'17:15'},
+    {n:'Maghrib',ar:'المغرب',ad:'21:00',iq:'21:10'},
+    {n:'Isha',ar:'العشاء',ad:'23:00',iq:'23:15'},
+  ],
+  ev_h:'Events', ev_sub:'Stay up to date.', ev_day:'Day',
+  events:[
+    {day:'Friday',t:'Friday Khutbah',time:'13:00',d:'Weekly sermon on religious and community topics.'},
+    {day:'Saturday',t:"Qur'an School",time:'10:00–13:00',d:"Children — Qur'an reading and tajweed."},
+    {day:'Sunday',t:'Islamic Lesson',time:'19:30',d:'Weekly class on Aqeedah and Fiqh.'},
+    {day:'Next month',t:'Community Iftar',time:'Maghrib',d:'Community iftar for all brothers and sisters.'},
+  ],
+  don_kick:'💚 Sadaqah Jariyah', don_h:'Support Arendal Mosque',
+  don_sub:"Your donation helps us stay open, teach the Qur'an, and serve the community.",
+  don_vd:'Pay easily with Vipps — one click.', don_vb:'Pay with Vipps →',
+  don_ct:'💳 Bank Card', don_cd:'Visa, Mastercard — from anywhere.', don_cb:'Pay by Card →',
+  don_bt:'🏦 Bank Transfer', don_bd:'Transfer directly to our bank account:', don_bn:'Account name',
+  don_ay:'"The example of those who spend their wealth in the way of Allah is like a seed that sprouts seven ears." — Al-Baqarah 2:261',
+  gal_h:'Gallery', gal_sub:'Photos from the mosque and community.',
+  gal_items:['The Mosque','Friday Prayer','Qur\'an School','Iftar','Events','Community'],
+  con_h:'Contact Us', con_sub:"Questions? We'd love to hear from you.",
+  contacts:[
+    {ico:'📍',t:'Address',v:'Arendal, Norway'},
+    {ico:'📧',t:'Email',v:'info@arendal-moske.no'},
+    {ico:'📱',t:'WhatsApp',v:'Join our group'},
+    {ico:'📘',t:'Facebook',v:'Arendal Mosque'},
+  ],
+  ft_desc:'Religious center for the Muslim community in Arendal.',
+  ft_con:'Contact', ft_fol:'Follow', ft_rights:'All rights reserved.',
+},
+ar:{
+  flag:'🇸🇦',label:'العربية',dir:'rtl',locale:'ar-SA',
+  nav:['الرئيسية','من نحن','أوقات الصلاة','الفعاليات','تبرع','معرض الصور','اتصل بنا'],
+  pages:['home','about','prayer','events','donate','gallery','contact'],
+  donate_nav:'تبرع', brand:'مسجد أريندال',
+  h_sub:'مركزنا الديني — مكان للصلاة والتعلم والتواصل لمجتمع المسلمين في أريندال.',
+  h_cta1:'💚 ادعم المسجد', h_cta2:'أوقات الصلاة',
+  h_cta_t:'أسهل طريقة لدعم المسجد',
+  h_cta_d:'مسجدنا هو مركزنا. تبرع صغير منتظم يُحدث فرقًا كبيرًا.',
+  h_donate_btn:'تبرع الآن',
+  h_join_t:'انضم إلى مجتمعنا',
+  h_join_d:'تابع آخر أخبارنا على واتساب وفيسبوك.',
+  h_hadith:'"من بنى لله مسجدًا بنى الله له بيتًا في الجنة." — البخاري ومسلم',
+  feats:[
+    {ico:'🕌',t:'الصلوات الخمس',d:'صلوات الجماعة اليومية، بما في ذلك صلاة الجمعة.'},
+    {ico:'📖',t:'مدرسة القرآن',d:'تعليم القرآن والعلوم الإسلامية للأطفال والكبار.'},
+    {ico:'🤝',t:'المجتمع',d:'فعاليات ولقاءات وبرامج مجتمعية على مدار السنة.'},
+  ],
+  ab_h:'عن المسجد', ab_sub:'المركز الديني لمجتمع المسلمين في أريندال.',
+  ab_m_t:'مهمتنا', ab_m_d:'نوفر مركزًا دينيًا واجتماعيًا لمسلمي أريندال: صلوات الجماعة، وتعليم القرآن والشريعة، وبرامج مجتمعية.',
+  ab_v_t:'رؤيتنا', ab_v_d:'مجتمع مسلم موحد يعيش وفق الإسلام الصحيح.',
+  ab_s_t:'الخدمات',
+  svcs:['الصلوات الخمس','صلاة الجمعة','مدرسة القرآن للأطفال','دروس دينية','زفاف ونكاح','جنائز ورعاية'],
+  pr_h:'أوقات الصلاة', th_pr:'الصلاة', th_ad:'الأذان', th_iq:'الإقامة',
+  pr_note:'قد تتغير الأوقات. تحقق من مجموعتنا على واتساب.',
+  ju_t:'🕌 صلاة الجمعة', ju_d:'الخطبة: <strong>13:00</strong> · الصلاة: <strong>13:30</strong>',
+  prayers:[
+    {n:'الفجر',ar:'Fajr',ad:'04:30',iq:'04:45'},
+    {n:'الظهر',ar:'Dhuhr',ad:'13:00',iq:'13:15'},
+    {n:'العصر',ar:'Asr',ad:'17:00',iq:'17:15'},
+    {n:'المغرب',ar:'Maghrib',ad:'21:00',iq:'21:10'},
+    {n:'العشاء',ar:'Isha',ad:'23:00',iq:'23:15'},
+  ],
+  ev_h:'الفعاليات', ev_sub:'ابق على اطلاع.', ev_day:'اليوم',
+  events:[
+    {day:'الجمعة',t:'خطبة الجمعة',time:'13:00',d:'خطبة أسبوعية حول مواضيع دينية واجتماعية.'},
+    {day:'السبت',t:'مدرسة القرآن',time:'10:00–13:00',d:'الأطفال — قراءة القرآن والتجويد.'},
+    {day:'الأحد',t:'درس علمي',time:'19:30',d:'درس أسبوعي في العقيدة والفقه.'},
+    {day:'الشهر القادم',t:'إفطار جماعي',time:'المغرب',d:'إفطار جماعي لجميع الإخوة والأخوات.'},
+  ],
+  don_kick:'💚 صدقة جارية', don_h:'ادعم مسجد أريندال',
+  don_sub:'تبرعك يساعدنا على البقاء مفتوحين، وتعليم القرآن، وخدمة المجتمع.',
+  don_vd:'ادفع بسهولة عبر Vipps — بنقرة واحدة.', don_vb:'← ادفع عبر Vipps',
+  don_ct:'💳 بطاقة بنكية', don_cd:'فيزا، ماستركارد — من أي مكان.', don_cb:'← ادفع بالبطاقة',
+  don_bt:'🏦 تحويل بنكي', don_bd:'حوّل مباشرة إلى حسابنا البنكي:', don_bn:'اسم الحساب',
+  don_ay:'"مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ." — البقرة 2:261',
+  gal_h:'معرض الصور', gal_sub:'صور من المسجد والمجتمع.',
+  gal_items:['المسجد','صلاة الجمعة','مدرسة القرآن','الإفطار','الفعاليات','المجتمع'],
+  con_h:'اتصل بنا', con_sub:'أسئلة؟ يسعدنا تواصلك معنا.',
+  contacts:[
+    {ico:'📍',t:'العنوان',v:'Arendal, Norge'},
+    {ico:'📧',t:'البريد الإلكتروني',v:'info@arendal-moske.no'},
+    {ico:'📱',t:'WhatsApp',v:'انضم إلى مجموعتنا'},
+    {ico:'📘',t:'Facebook',v:'مسجد أريندال'},
+  ],
+  ft_desc:'المركز الديني لمجتمع المسلمين في أريندال.',
+  ft_con:'اتصل', ft_fol:'تابعنا', ft_rights:'جميع الحقوق محفوظة.',
+}
+};
+
+/* gallery placeholder colors */
+const GAL_COLORS = [
+  ['#ecfdf5','#064e3b'],['#fffbeb','#92400e'],['#eff6ff','#1e40af'],
+  ['#fdf4ff','#7e22ce'],['#fff1f2','#9f1239'],['#f0fdf4','#166534'],
+];
+const GAL_ICONS = ['🕌','🤲','📖','🌙','🤝','☪️'];
+
+let lang = localStorage.getItem('lang')||'so';
+let curPage = 'home';
+
+function go(p){
+  curPage = p;
+  document.querySelectorAll('.page').forEach(el=>el.classList.toggle('active', el.id==='page-'+p));
+  document.querySelectorAll('[data-pg]').forEach(a=>a.classList.toggle('on', a.dataset.pg===p));
+  window.scrollTo(0,0);
+}
+
+function toggleLang(){document.getElementById('langDrop').classList.toggle('open')}
+function setLang(l){lang=l;localStorage.setItem('lang',l);document.getElementById('langDrop').classList.remove('open');render();}
+document.addEventListener('click',e=>{if(!e.target.closest('.lang-wrap'))document.getElementById('langDrop').classList.remove('open');});
+
+function openLb(src){
+  const lb=document.getElementById('lb');
+  document.getElementById('lb-img').src=src;
+  lb.classList.add('open');
+}
+function closeLb(){document.getElementById('lb').classList.remove('open');}
+
+function render(){
+  const d=T[lang];
+  document.documentElement.lang=lang;
+  document.documentElement.dir=d.dir;
+
+  /* lang btn */
+  document.getElementById('langBtn').textContent=d.flag+' '+d.label+' ▾';
+  document.querySelectorAll('.lang-drop button').forEach((b,i)=>{
+    b.classList.toggle('sel',['so','no','en','ar'][i]===lang);
+  });
+
+  /* nav */
+  const navHTML = d.nav.map((n,i)=>
+    `<a href="#" data-pg="${d.pages[i]}" onclick="go('${d.pages[i]}');return false">${n}</a>`
+  ).join('');
+  document.getElementById('deskNav').innerHTML=navHTML;
+  document.getElementById('mobNav').innerHTML=navHTML;
+  document.getElementById('hdr-donate').textContent=d.donate_nav;
+  document.querySelectorAll('[data-pg]').forEach(a=>a.classList.toggle('on',a.dataset.pg===curPage));
+
+  /* brand */
+  ['hdr-brand','h-brand','ft-brand'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=d.brand;});
+
+  /* home */
+  setText('h-sub',d.h_sub); setText('h-cta1',d.h_cta1); setText('h-cta2',d.h_cta2);
+  setText('h-cta-t',d.h_cta_t); setText('h-cta-d',d.h_cta_d); setText('h-donate-btn',d.h_donate_btn);
+  setText('h-join-t',d.h_join_t); setText('h-join-d',d.h_join_d); setText('h-hadith',d.h_hadith);
+  document.getElementById('home-cards').innerHTML=d.feats.map(f=>
+    `<div class="card"><div class="card-ico">${f.ico}</div><h3>${f.t}</h3><p>${f.d}</p></div>`
+  ).join('');
+
+  /* about */
+  setText('ab-h',d.ab_h); setText('ab-sub',d.ab_sub);
+  setText('ab-m-t',d.ab_m_t); setText('ab-m-d',d.ab_m_d);
+  setText('ab-v-t',d.ab_v_t); setText('ab-v-d',d.ab_v_d);
+  setText('ab-s-t',d.ab_s_t);
+  document.getElementById('svc-grid').innerHTML=d.svcs.map(s=>
+    `<div class="svc-item"><span class="svc-chk">✓</span><span>${s}</span></div>`
+  ).join('');
+
+  /* prayer */
+  setText('pr-h',d.pr_h);
+  document.getElementById('pr-date').textContent=new Date().toLocaleDateString(d.locale,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  setText('th-pr',d.th_pr);
+  document.getElementById('th-ad').textContent=d.th_ad;
+  document.getElementById('th-ad').style.textAlign=d.dir==='rtl'?'left':'right';
+  document.getElementById('th-iq').textContent=d.th_iq;
+  document.getElementById('th-iq').style.textAlign=d.dir==='rtl'?'left':'right';
+  setText('pr-note',d.pr_note); setText('ju-t',d.ju_t);
+  document.getElementById('ju-d').innerHTML=d.ju_d;
+  const ta=d.dir==='rtl'?'left':'right';
+  document.getElementById('pr-body').innerHTML=d.prayers.map((p,i)=>
+    `<tr style="${i%2?'background:#fafaf9':''}">
+      <td><div class="p-name">${p.n}</div><div class="p-ar">${p.ar}</div></td>
+      <td class="p-time p-adhan" style="text-align:${ta}">${p.ad}</td>
+      <td class="p-time p-iqama" style="text-align:${ta}">${p.iq}</td>
+    </tr>`
+  ).join('');
+
+  /* events */
+  setText('ev-h',d.ev_h); setText('ev-sub',d.ev_sub);
+  document.getElementById('ev-list').innerHTML=d.events.map(e=>
+    `<div class="ev-card">
+      <div class="ev-badge"><div class="ev-badge-lbl">${d.ev_day}</div><div class="ev-badge-day">${e.day}</div></div>
+      <div class="ev-body"><h3>${e.t}</h3><div class="ev-time">🕐 ${e.time}</div><div class="ev-desc">${e.d}</div></div>
+    </div>`
+  ).join('');
+
+  /* donate */
+  setText('don-kick',d.don_kick); setText('don-h',d.don_h); setText('don-sub',d.don_sub);
+  setText('don-vd',d.don_vd); setText('don-vb',d.don_vb);
+  setText('don-ct',d.don_ct); setText('don-cd',d.don_cd); setText('don-cb',d.don_cb);
+  setText('don-bt',d.don_bt); setText('don-bd',d.don_bd); setText('don-bn',d.don_bn);
+  setText('don-ay',d.don_ay);
+
+  /* gallery */
+  setText('gal-h',d.gal_h); setText('gal-sub',d.gal_sub);
+  document.getElementById('gal-grid').innerHTML=d.gal_items.map((lbl,i)=>{
+    const [bg,fg]=GAL_COLORS[i%GAL_COLORS.length];
+    return `<div class="gallery-item" onclick="openLb('')">
+      <div class="gallery-placeholder" style="background:linear-gradient(135deg,${bg},${bg}cc)">
+        <div class="gico" style="color:${fg}">${GAL_ICONS[i%GAL_ICONS.length]}</div>
+        <p style="color:${fg}">${lbl}</p>
+      </div>
+    </div>`;
+  }).join('');
+
+  /* contact */
+  setText('con-h',d.con_h); setText('con-sub',d.con_sub);
+  document.getElementById('con-grid').innerHTML=d.contacts.map(c=>
+    `<div class="con-card"><div class="ico">${c.ico}</div><h3>${c.t}</h3><p>${c.v}</p></div>`
+  ).join('');
+
+  /* footer */
+  setText('ft-desc',d.ft_desc); setText('ft-con',d.ft_con);
+  setText('ft-fol',d.ft_fol); setText('ft-rights',d.ft_rights);
+}
+
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+
+render();
+</script>
+</body>
+</html>
