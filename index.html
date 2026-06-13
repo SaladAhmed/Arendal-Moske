@@ -310,6 +310,58 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
       <h3 id="ju-t">🕌 Salaadda Jimcaha</h3>
       <p id="ju-d"></p>
     </div>
+
+    <!-- ===== QEYBTA 2AAD: Xilliyada Salaadda ===== -->
+    <div style="margin-top:40px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #bbf7d0;flex-wrap:wrap;gap:8px">
+        <h3 style="font-size:18px;font-weight:700;color:var(--green)">🕐 Xilliyada Salaadda - Arendal</h3>
+        <button onclick="toggleAdmin()" id="admin-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">✏️ Waqtiyada Beddel</button>
+      </div>
+
+      <!-- ADMIN EDIT PANEL -->
+      <div id="admin-panel" style="display:none;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:14px;padding:20px;margin-bottom:20px">
+        <p style="font-size:13px;color:var(--green2);margin-bottom:14px;font-weight:600">✏️ Waqtiyada beddel — ka dibna "Kaydi" gujiso</p>
+        <div style="display:grid;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:500">🌅 Fajr</label>
+            <input type="time" id="edit-fajr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:500">☀️ Dhuhr</label>
+            <input type="time" id="edit-dhuhr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:500">🌤️ Asr</label>
+            <input type="time" id="edit-asr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:500">🌇 Maghrib</label>
+            <input type="time" id="edit-maghrib" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:500">🌙 Isha</label>
+            <input type="time" id="edit-isha" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button onclick="savePrayers()" style="background:var(--green2);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1">💾 Kaydi</button>
+          <button onclick="toggleAdmin()" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 16px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+        </div>
+        <div id="save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600">✅ Waqtiyada si guul ah ayaa loo kaydiyay!</div>
+      </div>
+
+      <!-- TABLE DISPLAY -->
+      <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06)">
+        <thead>
+          <tr>
+            <th style="padding:12px 18px;background:#ecfdf5;color:var(--green);font-size:13px;font-weight:600;text-align:left;border-bottom:1px solid #d1fae5">Salaadda</th>
+            <th style="padding:12px 18px;background:#ecfdf5;color:var(--green);font-size:13px;font-weight:600;text-align:right;border-bottom:1px solid #d1fae5">Bilowga</th>
+          </tr>
+        </thead>
+        <tbody id="xilliyada-body"></tbody>
+      </table>
+      <p style="font-size:12px;color:var(--stone);text-align:center;margin-top:10px">💾 Waqtiyadu browser-ka ayay ku kaydsan yihiin</p>
+    </div>
   </div>
 </div>
 
@@ -774,7 +826,64 @@ function render(){
 
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
 
+/* ===== XILLIYADA SALAADDA - EDITABLE ===== */
+const DEFAULT_TIMES = {fajr:'03:00',dhuhr:'13:15',asr:'17:30',maghrib:'22:45',isha:'00:00'};
+const PRAYER_NAMES  = [
+  {key:'fajr',   icon:'🌅', name:'Fajr'},
+  {key:'dhuhr',  icon:'☀️', name:'Dhuhr'},
+  {key:'asr',    icon:'🌤️', name:'Asr'},
+  {key:'maghrib',icon:'🌇', name:'Maghrib'},
+  {key:'isha',   icon:'🌙', name:'Isha'},
+];
+
+function loadTimes(){
+  try{ return JSON.parse(localStorage.getItem('arendal_prayer_times'))||DEFAULT_TIMES; }
+  catch(e){ return DEFAULT_TIMES; }
+}
+
+function renderXilliyada(){
+  const times = loadTimes();
+  const tbody = document.getElementById('xilliyada-body');
+  if(!tbody) return;
+  tbody.innerHTML = PRAYER_NAMES.map((p,i)=>`
+    <tr style="${i%2?'background:#fafaf9':''}">
+      <td style="padding:12px 18px;border-bottom:${i<4?'1px solid #f5f5f4':'none'};font-weight:500">${p.icon} ${p.name}</td>
+      <td style="padding:12px 18px;border-bottom:${i<4?'1px solid #f5f5f4':'none'};text-align:right;font-family:monospace;font-size:18px;font-weight:700;color:var(--green2)">${times[p.key]}</td>
+    </tr>`
+  ).join('');
+}
+
+function toggleAdmin(){
+  const panel = document.getElementById('admin-panel');
+  const isOpen = panel.style.display !== 'none';
+  if(!isOpen){
+    // Load current times into inputs
+    const times = loadTimes();
+    PRAYER_NAMES.forEach(p=>{
+      const el = document.getElementById('edit-'+p.key);
+      if(el) el.value = times[p.key];
+    });
+    document.getElementById('save-msg').style.display='none';
+  }
+  panel.style.display = isOpen ? 'none' : 'block';
+  document.getElementById('admin-btn').textContent = isOpen ? '✏️ Waqtiyada Beddel' : '✕ Xir';
+}
+
+function savePrayers(){
+  const times = {};
+  PRAYER_NAMES.forEach(p=>{
+    const el = document.getElementById('edit-'+p.key);
+    times[p.key] = el && el.value ? el.value : DEFAULT_TIMES[p.key];
+  });
+  localStorage.setItem('arendal_prayer_times', JSON.stringify(times));
+  renderXilliyada();
+  const msg = document.getElementById('save-msg');
+  msg.style.display='block';
+  setTimeout(()=>{ msg.style.display='none'; toggleAdmin(); }, 1800);
+}
+
 render();
+renderXilliyada();
 </script>
 </body>
 </html>
