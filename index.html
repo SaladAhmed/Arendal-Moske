@@ -23,8 +23,9 @@ header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;b
 .nav-inner{max-width:1140px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:10px;height:58px}
 .logo{font-weight:800;font-size:18px;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .logo span:first-child{font-size:24px}
-.nav-links{display:flex;gap:2px;flex:1;justify-content:center}
-.nav-links a{padding:6px 10px;border-radius:6px;font-size:13px;color:#a7f3d0;transition:background .15s;white-space:nowrap}
+.nav-links{display:flex;gap:1px;flex:1;justify-content:center;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:5px 8px;border-radius:6px;font-size:11.5px;color:#a7f3d0;transition:background .15s;white-space:nowrap;flex-shrink:0}
 .nav-links a:hover,.nav-links a.on{background:rgba(255,255,255,.16);color:#fff}
 .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .donate-pill{background:var(--amber);color:#064e3b;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
@@ -42,8 +43,8 @@ header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;b
 
 /* mobile nav */
 .mob-nav{display:none;background:var(--green);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto}
-.mob-nav-inner{display:flex;gap:2px;padding:6px 12px;white-space:nowrap}
-.mob-nav-inner a{padding:5px 10px;border-radius:5px;font-size:12px;color:#a7f3d0}
+.mob-nav-inner{display:flex;gap:2px;padding:6px 10px;white-space:nowrap;flex-wrap:wrap}
+.mob-nav-inner a{padding:5px 9px;border-radius:5px;font-size:12px;color:#a7f3d0;white-space:nowrap}
 .mob-nav-inner a:hover,.mob-nav-inner a.on{background:rgba(255,255,255,.16);color:#fff}
 
 /* ===== PAGES ===== */
@@ -199,9 +200,9 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 .med-del{background:none;border:none;color:#dc2626;font-size:12px;cursor:pointer;padding:0}
 .med-del:hover{text-decoration:underline}
 /* ===== RESPONSIVE ===== */
+.nav-links{display:none !important}
+.mob-nav{display:block !important}
 @media(max-width:768px){
-  .nav-links{display:none}
-  .mob-nav{display:block}
   .donate-pill{display:none}
   .community-grid{grid-template-columns:1fr}
 }
