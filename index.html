@@ -182,6 +182,18 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 .ft-col p{font-size:13px;line-height:1.9}
 .ft-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;padding:16px;font-size:12px;color:#6ee7b7}
 
+/* ===== MEDIA PAGE ===== */
+.flt-btn{padding:8px 18px;border-radius:20px;border:1.5px solid #bbf7d0;background:#fff;color:var(--stone2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.flt-btn:hover{background:#ecfdf5;border-color:var(--green4)}
+.flt-on{background:var(--green2)!important;color:#fff!important;border-color:var(--green2)!important}
+.med-card{background:#fff;border:1px solid #e7e5e4;border-radius:16px;overflow:hidden;transition:box-shadow .2s}
+.med-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.med-card-body{padding:16px}
+.med-card-body h3{font-size:15px;font-weight:700;color:var(--green);margin-bottom:4px;line-height:1.4}
+.med-card-body .sheikh{font-size:13px;color:var(--stone);margin-bottom:8px}
+.med-card-body .desc{font-size:13px;color:var(--stone2);line-height:1.5;margin-bottom:12px}
+.med-del{background:none;border:none;color:#dc2626;font-size:12px;cursor:pointer;padding:0}
+.med-del:hover{text-decoration:underline}
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
   .nav-links{display:none}
@@ -455,6 +467,70 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
   </div>
 </div>
 
+<!-- ========== MEDIA: MUXAADAROOYINKA ========== -->
+<div class="page" id="page-media">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="med-h">Muxaadarooyinka</h1>
+    <p id="med-sub">Wacdiyada, darsyada iyo casharka diinta — video iyo audio.</p>
+  </div></div>
+  <div class="wrap">
+
+    <!-- ADMIN: KU DAR MEDIA -->
+    <div style="margin-bottom:32px;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:16px;padding:24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <h3 style="font-size:16px;font-weight:700;color:var(--green)" id="med-add-h">➕ Wacdi cusub ku dar</h3>
+        <button onclick="toggleMediaForm()" id="med-form-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">➕ Ku dar</button>
+      </div>
+      <div id="media-form" style="display:none">
+        <div style="display:grid;gap:12px">
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-title">Cinwaan (Title)</label>
+            <input id="mf-title" type="text" placeholder="Tusaale: Tawbada iyo Cafiska" style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff"/>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-sheikh">Sheekh / Macallin</label>
+            <input id="mf-sheikh" type="text" placeholder="Sheekh Maxamed..." style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff"/>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-type">Nooca</label>
+            <select id="mf-type" style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff">
+              <option value="video">🎥 Video (YouTube)</option>
+              <option value="audio">🎵 Audio (MP3 / SoundCloud)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-url">Link-ka (URL)</label>
+            <input id="mf-url" type="url" placeholder="https://www.youtube.com/watch?v=... ama https://soundcloud.com/..." style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff"/>
+            <p style="font-size:11px;color:var(--stone);margin-top:4px" id="med-url-hint">YouTube, SoundCloud, ama link kasta oo audio/video ah</p>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-desc">Faahfaahin (ikhtiyaari)</label>
+            <textarea id="mf-desc" rows="2" placeholder="Mawduuca wacdigu wuxuu ka hadlayaa..." style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff;resize:vertical"></textarea>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button onclick="addMedia()" style="background:var(--green2);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="med-save-btn">💾 Kaydi</button>
+          <button onclick="toggleMediaForm()" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:10px 16px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+        </div>
+        <div id="med-save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600">✅ Wacdigu si guul ah ayaa loo kaydiyay!</div>
+      </div>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+      <button onclick="filterMedia('all')" id="flt-all" class="flt-btn flt-on">🎬 Dhammaan</button>
+      <button onclick="filterMedia('video')" id="flt-video" class="flt-btn">🎥 Video</button>
+      <button onclick="filterMedia('audio')" id="flt-audio" class="flt-btn">🎵 Audio</button>
+    </div>
+
+    <!-- MEDIA LIST -->
+    <div id="media-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px"></div>
+    <p id="med-empty" style="display:none;text-align:center;color:var(--stone);padding:60px 0;font-size:15px">
+      Wali wax lama darin. Gujiso "➕ Ku dar" si aad u bilowdo.
+    </p>
+  </div>
+</div>
+
 <!-- ========== CONTACT ========== -->
 <div class="page" id="page-contact">
   <div class="pg-hdr"><div class="pg-hdr-inner">
@@ -463,6 +539,31 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
   </div></div>
   <div class="wrap-sm">
     <div class="con-grid" id="con-grid"></div>
+
+    <!-- GOOGLE MAP -->
+    <div style="margin-top:40px">
+      <h3 id="map-h" style="font-size:18px;font-weight:700;color:var(--green);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #bbf7d0">
+        📍 Halkaan ayaan ku taal
+      </h3>
+      <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);border:1px solid #e7e5e4">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2060.035415785002!2d8.76566417757963!3d58.45524677416413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4647cc51d7e35b71%3A0xcc144362b53589b4!2sVestre%20gate%2021B%2C%204838%20Arendal!5e0!3m2!1sen!2sno!4v1718369500000!5m2!1sen!2sno"
+          width="100%"
+          height="420"
+          style="border:0;display:block"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <p style="font-size:14px;color:var(--stone)">📍 Vestre gate 21B, 4838 Arendal</p>
+        <a href="https://maps.google.com/?q=Vestre+gate+21B,+4838+Arendal" target="_blank" rel="noreferrer"
+          style="background:var(--green);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px">
+          🗺️ <span id="map-open">Google Maps ku fur</span>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -498,8 +599,8 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 const T = {
 so:{
   flag:'🇸🇴',label:'Soomaali',dir:'ltr',locale:'so-SO',
-  nav:['Bogga Hore','Ku Saabsan','Waqtiyada','Munaasabadaha','Deeq','Sawirrada','Ducooyin','Xiriir'],
-  pages:['home','about','prayer','events','donate','gallery','duco','contact'],
+  nav:['Bogga Hore','Ku Saabsan','Waqtiyada','Munaasabadaha','Deeq','Sawirrada','Ducooyin','Muxaadarooyinka','Xiriir'],
+  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
   donate_nav:'Deeq',
   brand:'Arendal Moske',
   h_sub:'Xarunteena diineed — meel aan ku tukano, ku barano, kuna isku xirno bulshadeena Muslimka ah ee Arendal.',
@@ -557,8 +658,8 @@ so:{
 },
 no:{
   flag:'🇳🇴',label:'Norsk',dir:'ltr',locale:'nb-NO',
-  nav:['Hjem','Om oss','Bønnetider','Arrangementer','Donasjon','Galleri','Dua','Kontakt'],
-  pages:['home','about','prayer','events','donate','gallery','duco','contact'],
+  nav:['Hjem','Om oss','Bønnetider','Arrangementer','Donasjon','Galleri','Dua','Forelesninger','Kontakt'],
+  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
   donate_nav:'Donasjon', brand:'Arendal Moske',
   h_sub:'Vårt religiøse sentrum — et sted for bønn, læring og fellesskap for muslimene i Arendal.',
   h_cta1:'💚 Støtt moskeen', h_cta2:'Bønnetider',
@@ -615,8 +716,8 @@ no:{
 },
 en:{
   flag:'🇬🇧',label:'English',dir:'ltr',locale:'en-GB',
-  nav:['Home','About','Prayer Times','Events','Donate','Gallery','Du\'a','Contact'],
-  pages:['home','about','prayer','events','donate','gallery','duco','contact'],
+  nav:['Home','About','Prayer Times','Events','Donate','Gallery','Du\'a','Lectures','Contact'],
+  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
   donate_nav:'Donate', brand:'Arendal Mosque',
   h_sub:"Our religious center — a place to pray, learn, and connect as a Muslim community in Arendal.",
   h_cta1:'💚 Support the Mosque', h_cta2:'Prayer Times',
@@ -673,8 +774,8 @@ en:{
 },
 ar:{
   flag:'🇸🇦',label:'العربية',dir:'rtl',locale:'ar-SA',
-  nav:['الرئيسية','من نحن','أوقات الصلاة','الفعاليات','تبرع','معرض الصور','أدعية','اتصل بنا'],
-  pages:['home','about','prayer','events','donate','gallery','duco','contact'],
+  nav:['الرئيسية','من نحن','أوقات الصلاة','الفعاليات','تبرع','معرض الصور','أدعية','المحاضرات','اتصل بنا'],
+  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
   donate_nav:'تبرع', brand:'مسجد أريندال',
   h_sub:'مركزنا الديني — مكان للصلاة والتعلم والتواصل لمجتمع المسلمين في أريندال.',
   h_cta1:'💚 ادعم المسجد', h_cta2:'أوقات الصلاة',
@@ -853,9 +954,17 @@ function render(){
   ).join('');
 
   /* footer */
+  /* map labels */
+  const mapH = document.getElementById('map-h');
+  const mapO = document.getElementById('map-open');
+  const mapLabels = {so:'Halkaan ayaan ku taal',no:'Her finner du oss',en:'Find us here',ar:'موقعنا'};
+  const mapOpen  = {so:'Google Maps ku fur',no:'Åpne i Google Maps',en:'Open in Google Maps',ar:'افتح في Google Maps'};
+  if(mapH) mapH.innerHTML = '📍 ' + mapLabels[lang];
+  if(mapO) mapO.textContent = mapOpen[lang];
   setText('ft-desc',d.ft_desc); setText('ft-con',d.ft_con);
   setText('ft-fol',d.ft_fol); setText('ft-rights',d.ft_rights);
   renderDuco();
+  renderMedia();
 }
 
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
@@ -929,6 +1038,149 @@ function renderDuco(){
       <p style="font-size:12px;color:var(--stone);text-align:right">${du.ar_tr}</p>
     </div>`;
   }).join('');
+}
+
+/* ===== MEDIA: MUXAADAROOYINKA ===== */
+let mediaFilter = 'all';
+
+const MED_LABELS = {
+  so:{ h:'Muxaadarooyinka', sub:'Wacdiyada, darsyada iyo casharka diinta — video iyo audio.',
+       add_h:'➕ Wacdi cusub ku dar', lbl_title:'Cinwaan', lbl_sheikh:'Sheekh / Macallin',
+       lbl_type:'Nooca', lbl_url:'Link-ka (URL)', lbl_desc:'Faahfaahin (ikhtiyaari)',
+       url_hint:'YouTube, SoundCloud, ama link kasta oo audio/video ah',
+       save:'💾 Kaydi', flt_all:'🎬 Dhammaan', flt_video:'🎥 Video', flt_audio:'🎵 Audio',
+       empty:'Wali wax lama darin. Gujiso "➕ Ku dar" si aad u bilowdo.',
+       saved:'✅ Wacdigu si guul ah ayaa loo kaydiyay!', del:'Tir',
+       type_video:'🎥 Video (YouTube)', type_audio:'🎵 Audio (MP3 / SoundCloud)', add_btn:'➕ Ku dar' },
+  no:{ h:'Forelesninger', sub:'Forelesninger, leksjoner og religiøse taler — video og lyd.',
+       add_h:'➕ Legg til ny forelesning', lbl_title:'Tittel', lbl_sheikh:'Sjekh / Lærer',
+       lbl_type:'Type', lbl_url:'Lenke (URL)', lbl_desc:'Beskrivelse (valgfritt)',
+       url_hint:'YouTube, SoundCloud eller annen video/lyd-lenke',
+       save:'💾 Lagre', flt_all:'🎬 Alle', flt_video:'🎥 Video', flt_audio:'🎵 Lyd',
+       empty:'Ingen innhold ennå. Klikk "➕ Legg til" for å starte.',
+       saved:'✅ Forelesningen ble lagret!', del:'Slett',
+       type_video:'🎥 Video (YouTube)', type_audio:'🎵 Lyd (MP3 / SoundCloud)', add_btn:'➕ Legg til' },
+  en:{ h:'Lectures', sub:'Sermons, lessons and religious lectures — video and audio.',
+       add_h:'➕ Add new lecture', lbl_title:'Title', lbl_sheikh:'Sheikh / Teacher',
+       lbl_type:'Type', lbl_url:'Link (URL)', lbl_desc:'Description (optional)',
+       url_hint:'YouTube, SoundCloud or any audio/video link',
+       save:'💾 Save', flt_all:'🎬 All', flt_video:'🎥 Video', flt_audio:'🎵 Audio',
+       empty:'Nothing added yet. Click "➕ Add" to get started.',
+       saved:'✅ Lecture saved successfully!', del:'Delete',
+       type_video:'🎥 Video (YouTube)', type_audio:'🎵 Audio (MP3 / SoundCloud)', add_btn:'➕ Add' },
+  ar:{ h:'المحاضرات', sub:'المواعظ والدروس الدينية — فيديو وصوت.',
+       add_h:'➕ إضافة محاضرة جديدة', lbl_title:'العنوان', lbl_sheikh:'الشيخ / المعلم',
+       lbl_type:'النوع', lbl_url:'الرابط', lbl_desc:'الوصف (اختياري)',
+       url_hint:'YouTube أو SoundCloud أو أي رابط صوت/فيديو',
+       save:'💾 حفظ', flt_all:'🎬 الكل', flt_video:'🎥 فيديو', flt_audio:'🎵 صوت',
+       empty:'لم يتم إضافة أي محتوى بعد.',
+       saved:'✅ تم حفظ المحاضرة بنجاح!', del:'حذف',
+       type_video:'🎥 فيديو (YouTube)', type_audio:'🎵 صوت (SoundCloud)', add_btn:'➕ إضافة' },
+};
+
+function loadMedia(){ try{ return JSON.parse(localStorage.getItem('arendal_media'))||[]; }catch(e){ return []; } }
+function saveMedia(arr){ localStorage.setItem('arendal_media', JSON.stringify(arr)); }
+
+function toggleMediaForm(){
+  const f=document.getElementById('media-form');
+  const btn=document.getElementById('med-form-btn');
+  const d=MED_LABELS[lang];
+  const open=f.style.display==='none';
+  f.style.display=open?'block':'none';
+  btn.textContent=open?'✕ Xir':d.add_btn;
+  if(open){ document.getElementById('med-save-msg').style.display='none'; }
+}
+
+function getYouTubeId(url){
+  const m=url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\s&?\/]+)/);
+  return m?m[1]:null;
+}
+
+function getSoundCloudEmbed(url){
+  if(url.includes('soundcloud.com')) return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23059669&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
+  return null;
+}
+
+function buildEmbed(type, url){
+  if(type==='video'){
+    const ytId=getYouTubeId(url);
+    if(ytId) return `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen style="display:block;border-radius:12px 12px 0 0"></iframe>`;
+    return `<video controls src="${url}" style="width:100%;max-height:200px;background:#000;border-radius:12px 12px 0 0;display:block"></video>`;
+  } else {
+    const scUrl=getSoundCloudEmbed(url);
+    if(scUrl) return `<iframe width="100%" height="120" scrolling="no" frameborder="no" src="${scUrl}" style="display:block;background:#f8f8f8"></iframe>`;
+    return `<audio controls style="width:100%;padding:16px;background:#ecfdf5;display:block"><source src="${url}"><p style="padding:8px;font-size:13px">Audio link: <a href="${url}" target="_blank">${url}</a></p></audio>`;
+  }
+}
+
+function addMedia(){
+  const title=document.getElementById('mf-title').value.trim();
+  const sheikh=document.getElementById('mf-sheikh').value.trim();
+  const type=document.getElementById('mf-type').value;
+  const url=document.getElementById('mf-url').value.trim();
+  const desc=document.getElementById('mf-desc').value.trim();
+  if(!title||!url){ alert('Cinwaanka iyo link-ka waa muhiim!'); return; }
+  const arr=loadMedia();
+  arr.unshift({ id:Date.now(), title, sheikh, type, url, desc, date: new Date().toLocaleDateString() });
+  saveMedia(arr);
+  // clear form
+  ['mf-title','mf-sheikh','mf-url','mf-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mf-type').value='video';
+  const msg=document.getElementById('med-save-msg');
+  msg.textContent=MED_LABELS[lang].saved;
+  msg.style.display='block';
+  setTimeout(()=>{ msg.style.display='none'; toggleMediaForm(); renderMedia(); },1600);
+}
+
+function deleteMedia(id){
+  if(!confirm('Ma hubtaa in aad tireyso?')) return;
+  saveMedia(loadMedia().filter(m=>m.id!==id));
+  renderMedia();
+}
+
+function filterMedia(f){
+  mediaFilter=f;
+  document.querySelectorAll('.flt-btn').forEach(b=>b.classList.remove('flt-on'));
+  document.getElementById('flt-'+f).classList.add('flt-on');
+  renderMedia();
+}
+
+function renderMedia(){
+  const d=MED_LABELS[lang];
+  // update labels
+  setText('med-h',d.h); setText('med-sub',d.sub); setText('med-add-h',d.add_h);
+  setText('med-lbl-title',d.lbl_title); setText('med-lbl-sheikh',d.lbl_sheikh);
+  setText('med-lbl-type',d.lbl_type); setText('med-lbl-url',d.lbl_url);
+  setText('med-lbl-desc',d.lbl_desc); setText('med-url-hint',d.url_hint);
+  setText('med-save-btn',d.save); setText('med-form-btn', document.getElementById('media-form').style.display==='none'?d.add_btn:'✕ Xir');
+  setText('flt-all',d.flt_all); setText('flt-video',d.flt_video); setText('flt-audio',d.flt_audio);
+  const opt=document.getElementById('mf-type');
+  if(opt){ opt.options[0].text=d.type_video; opt.options[1].text=d.type_audio; }
+  // render cards
+  let arr=loadMedia();
+  if(mediaFilter!=='all') arr=arr.filter(m=>m.type===mediaFilter);
+  const list=document.getElementById('media-list');
+  const empty=document.getElementById('med-empty');
+  if(!arr.length){ list.innerHTML=''; empty.style.display='block'; empty.textContent=d.empty; return; }
+  empty.style.display='none';
+  list.innerHTML=arr.map(m=>`
+    <div class="med-card">
+      ${buildEmbed(m.type, m.url)}
+      <div class="med-card-body">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+          <span style="background:${m.type==='video'?'#eff6ff':'#ecfdf5'};color:${m.type==='video'?'#1d4ed8':'#065f46'};border-radius:12px;padding:2px 10px;font-size:11px;font-weight:600">${m.type==='video'?'🎥 Video':'🎵 Audio'}</span>
+          <span style="font-size:11px;color:var(--stone)">${m.date||''}</span>
+        </div>
+        <h3>${m.title}</h3>
+        ${m.sheikh?`<div class="sheikh">👤 ${m.sheikh}</div>`:''}
+        ${m.desc?`<div class="desc">${m.desc}</div>`:''}
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+          <a href="${m.url}" target="_blank" style="font-size:12px;color:var(--green3)">🔗 Link</a>
+          <button class="med-del" onclick="deleteMedia(${m.id})">${d.del} 🗑️</button>
+        </div>
+      </div>
+    </div>`
+  ).join('');
 }
 
 /* ===== XILLIYADA SALAADDA - EDITABLE ===== */
