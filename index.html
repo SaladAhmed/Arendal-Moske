@@ -182,6 +182,10 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 .ft-col p{font-size:13px;line-height:1.9}
 .ft-bottom{border-top:1px solid rgba(255,255,255,.1);text-align:center;padding:16px;font-size:12px;color:#6ee7b7}
 
+/* ===== SEASON BUTTONS ===== */
+.ssn-btn{padding:7px 14px;border-radius:20px;border:1.5px solid #bbf7d0;background:#fff;color:var(--stone2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.ssn-btn:hover{background:#ecfdf5}
+.ssn-on{background:var(--green2)!important;color:#fff!important;border-color:var(--green2)!important}
 /* ===== MEDIA PAGE ===== */
 .flt-btn{padding:8px 18px;border-radius:20px;border:1.5px solid #bbf7d0;background:#fff;color:var(--stone2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
 .flt-btn:hover{background:#ecfdf5;border-color:var(--green4)}
@@ -327,75 +331,102 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 <!-- ========== PRAYER ========== -->
 <div class="page" id="page-prayer">
   <div class="pg-hdr"><div class="pg-hdr-inner">
-    <h1 id="pr-h">Waqtiyada Salaadda</h1>
+    <h1 id="pr-h">Bønnetider</h1>
     <p id="pr-date"></p>
   </div></div>
   <div class="wrap-sm">
-    <table class="prayer-table">
-      <thead><tr>
-        <th id="th-pr">Salaad</th>
-        <th id="th-ad" style="text-align:right">Adhan</th>
-        <th id="th-iq" style="text-align:right">Iqaamah</th>
-      </tr></thead>
-      <tbody id="pr-body"></tbody>
-    </table>
-    <p class="pr-note" id="pr-note"></p>
+
+    <!-- LIVE CLOCK + NEXT PRAYER COUNTDOWN -->
+    <div style="background:linear-gradient(135deg,#022c22,#064e3b);color:#fff;border-radius:20px;padding:28px;text-align:center;margin-bottom:28px">
+      <div style="font-size:13px;color:#a7f3d0;margin-bottom:6px" id="pr-localtime-lbl">Nåværende tid</div>
+      <div id="pr-clock" style="font-size:clamp(2.4rem,6vw,3.5rem);font-family:monospace;font-weight:800;letter-spacing:.06em;margin-bottom:16px">00:00:00</div>
+      <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:14px 20px;display:inline-block;min-width:260px">
+        <div style="font-size:12px;color:#a7f3d0;margin-bottom:4px" id="pr-next-lbl">Næste bønn</div>
+        <div style="font-size:20px;font-weight:700" id="pr-next-name">—</div>
+        <div style="font-size:13px;color:#6ee7b7;margin-top:4px" id="pr-countdown">—</div>
+      </div>
+    </div>
+
+    <!-- SEASON SELECTOR -->
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;align-items:center">
+      <span id="pr-season-lbl" style="font-size:13px;color:var(--stone);font-weight:500">Sesong:</span>
+      <button onclick="setSeason('winter')"  id="ssn-winter"  class="ssn-btn">❄️ Vinter</button>
+      <button onclick="setSeason('spring')"  id="ssn-spring"  class="ssn-btn">🌸 Vår</button>
+      <button onclick="setSeason('summer')"  id="ssn-summer"  class="ssn-btn">☀️ Sommer</button>
+      <button onclick="setSeason('autumn')"  id="ssn-autumn"  class="ssn-btn">🍂 Høst</button>
+      <button onclick="setSeason('ramadan')" id="ssn-ramadan" class="ssn-btn">🌙 Ramadan</button>
+    </div>
+
+    <!-- PRAYER TABLE -->
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:18px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)">
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr style="background:#ecfdf5">
+            <th id="th-pr" style="padding:14px 20px;font-size:13px;font-weight:600;color:var(--green);text-align:left">Bønn</th>
+            <th id="th-ad" style="padding:14px 20px;font-size:13px;font-weight:600;color:var(--green);text-align:right">Adhan</th>
+            <th id="th-iq" style="padding:14px 20px;font-size:13px;font-weight:600;color:var(--green);text-align:right">Iqamah</th>
+          </tr>
+        </thead>
+        <tbody id="pr-body"></tbody>
+      </table>
+    </div>
+
+    <p id="pr-note" style="text-align:center;font-size:13px;color:var(--stone);margin:14px 0"></p>
+
+    <!-- JUMU'AH BOX -->
     <div class="jumua-box">
-      <h3 id="ju-t">🕌 Salaadda Jimcaha</h3>
+      <h3 id="ju-t">🕌 Fredagsbønn</h3>
       <p id="ju-d"></p>
     </div>
 
-    <!-- ===== QEYBTA 2AAD: Xilliyada Salaadda ===== -->
-    <div style="margin-top:40px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #bbf7d0;flex-wrap:wrap;gap:8px">
-        <h3 style="font-size:18px;font-weight:700;color:var(--green)">🕐 Xilliyada Salaadda - Arendal</h3>
-        <button onclick="toggleAdmin()" id="admin-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">✏️ Waqtiyada Beddel</button>
+    <!-- EDIT TIMES ADMIN -->
+    <div style="margin-top:32px;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:16px;padding:22px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div>
+          <h3 id="admin-title" style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:2px">✏️ Endre bønnetider</h3>
+          <p id="admin-season-name" style="font-size:12px;color:var(--stone)"></p>
+        </div>
+        <button onclick="toggleAdmin()" id="admin-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">✏️ Endre</button>
       </div>
-
-      <!-- ADMIN EDIT PANEL -->
-      <div id="admin-panel" style="display:none;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:14px;padding:20px;margin-bottom:20px">
-        <p style="font-size:13px;color:var(--green2);margin-bottom:14px;font-weight:600">✏️ Waqtiyada beddel — ka dibna "Kaydi" gujiso</p>
-        <div style="display:grid;gap:10px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
-            <label style="font-size:14px;font-weight:500">🌅 Fajr</label>
-            <input type="time" id="edit-fajr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+      <div id="admin-panel" style="display:none">
+        <div style="display:grid;gap:10px;margin-bottom:14px">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center;font-size:13px;font-weight:600;color:var(--stone)">
+            <span></span><span id="th-adhan-lbl" style="text-align:center">Adhan</span><span id="th-iqama-lbl" style="text-align:center">Iqamah</span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
-            <label style="font-size:14px;font-weight:500">☀️ Dhuhr</label>
-            <input type="time" id="edit-dhuhr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:600">🌅 Fajr</label>
+            <input type="time" id="edit-fajr"    style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+            <input type="time" id="edit-fajr-iq" style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
-            <label style="font-size:14px;font-weight:500">🌤️ Asr</label>
-            <input type="time" id="edit-asr" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:600">☀️ Dhuhr</label>
+            <input type="time" id="edit-dhuhr"    style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+            <input type="time" id="edit-dhuhr-iq" style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
-            <label style="font-size:14px;font-weight:500">🌇 Maghrib</label>
-            <input type="time" id="edit-maghrib" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:600">🌤️ Asr</label>
+            <input type="time" id="edit-asr"    style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+            <input type="time" id="edit-asr-iq" style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center">
-            <label style="font-size:14px;font-weight:500">🌙 Isha</label>
-            <input type="time" id="edit-isha" style="padding:8px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:15px;font-family:monospace;background:#fff;color:var(--stone3)"/>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:600">🌇 Maghrib</label>
+            <input type="time" id="edit-maghrib"    style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+            <input type="time" id="edit-maghrib-iq" style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center">
+            <label style="font-size:14px;font-weight:600">🌙 Isha</label>
+            <input type="time" id="edit-isha"    style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
+            <input type="time" id="edit-isha-iq" style="padding:8px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;font-family:monospace;background:#fff;text-align:center"/>
           </div>
         </div>
-        <div style="display:flex;gap:10px;margin-top:16px">
-          <button onclick="savePrayers()" style="background:var(--green2);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1">💾 Kaydi</button>
-          <button onclick="toggleAdmin()" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 16px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+        <div style="display:flex;gap:8px">
+          <button onclick="savePrayers()" id="pr-save-btn" style="background:var(--green2);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1">💾 Lagre</button>
+          <button onclick="toggleAdmin()" id="pr-cancel-btn" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer">Avbryt</button>
         </div>
-        <div id="save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600">✅ Waqtiyada si guul ah ayaa loo kaydiyay!</div>
+        <div id="save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600"></div>
       </div>
-
-      <!-- TABLE DISPLAY -->
-      <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06)">
-        <thead>
-          <tr>
-            <th style="padding:12px 18px;background:#ecfdf5;color:var(--green);font-size:13px;font-weight:600;text-align:left;border-bottom:1px solid #d1fae5">Salaadda</th>
-            <th style="padding:12px 18px;background:#ecfdf5;color:var(--green);font-size:13px;font-weight:600;text-align:right;border-bottom:1px solid #d1fae5">Bilowga</th>
-          </tr>
-        </thead>
-        <tbody id="xilliyada-body"></tbody>
-      </table>
-      <p style="font-size:12px;color:var(--stone);text-align:center;margin-top:10px">💾 Waqtiyadu browser-ka ayay ku kaydsan yihiin</p>
     </div>
+
   </div>
 </div>
 
@@ -489,7 +520,7 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
           </div>
           <div>
             <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-sheikh">Sheekh / Macallin</label>
-            <input id="mf-sheikh" type="text" placeholder="Sheekh Maxamed..." style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff"/>
+            <input id="mf-sheikh" type="text" id="mf-sheikh-ph" placeholder="Sheekh Maxamed..." style="width:100%;padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;background:#fff"/>
           </div>
           <div>
             <label style="font-size:13px;font-weight:500;color:var(--stone2);display:block;margin-bottom:4px" id="med-lbl-type">Nooca</label>
@@ -509,16 +540,16 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
           </div>
         </div>
         <div style="display:flex;gap:10px;margin-top:14px">
-          <button onclick="addMedia()" style="background:var(--green2);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="med-save-btn">💾 Kaydi</button>
-          <button onclick="toggleMediaForm()" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:10px 16px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+          <button onclick="addMedia()" style="background:var(--green2);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="med-save-btn"><span id="med-save-txt">💾 Kaydi</span></button>
+          <button onclick="toggleMediaForm()" id="med-cancel-btn" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:10px 16px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
         </div>
-        <div id="med-save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600">✅ Wacdigu si guul ah ayaa loo kaydiyay!</div>
+        <div id="med-save-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600"><span id="med-saved-txt">✅ Wacdigu si guul ah ayaa loo kaydiyay!</span></div>
       </div>
     </div>
 
     <!-- FILTER TABS -->
     <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
-      <button onclick="filterMedia('all')" id="flt-all" class="flt-btn flt-on">🎬 Dhammaan</button>
+      <button onclick="filterMedia('all')" id="flt-all" class="flt-btn flt-on">🎬 <span id="flt-all-txt">Dhammaan</span></button>
       <button onclick="filterMedia('video')" id="flt-video" class="flt-btn">🎥 Video</button>
       <button onclick="filterMedia('audio')" id="flt-audio" class="flt-btn">🎵 Audio</button>
     </div>
@@ -531,19 +562,147 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
   </div>
 </div>
 
+<!-- ========== WARARKA / NEWS ========== -->
+<div class="page" id="page-news">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="news-h">Wararka</h1>
+    <p id="news-sub">Wararka iyo ogeysiisyada cusub ee Masaajidka.</p>
+  </div></div>
+  <div class="wrap-sm">
+    <!-- ADD NEWS ADMIN -->
+    <div style="margin-bottom:28px;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:16px;padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <h3 id="news-add-h" style="font-size:15px;font-weight:700;color:var(--green)">➕ War cusub ku dar</h3>
+        <button onclick="toggleForm('news-form','news-form-btn',NEWS_L)" id="news-form-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">➕ Ku dar</button>
+      </div>
+      <div id="news-form" style="display:none;display:grid;gap:10px">
+        <input id="nf-title" type="text" id="nf-title-ph" placeholder="Cinwaanka warka..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+        <textarea id="nf-body" rows="3" id="nf-body-ph" placeholder="Qoraalka warku..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%;resize:vertical"></textarea>
+        <div style="display:flex;gap:8px">
+          <button onclick="addNews()" style="background:var(--green2);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="news-save-btn">💾 Kaydi</button>
+          <button onclick="toggleForm('news-form','news-form-btn',NEWS_L)" id="news-cancel-btn" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+        </div>
+      </div>
+    </div>
+    <!-- NEWS LIST -->
+    <div id="news-list" style="display:flex;flex-direction:column;gap:16px"></div>
+    <p id="news-empty" style="display:none;text-align:center;color:var(--stone);padding:48px 0;font-size:15px">Wali war lama darin.</p>
+  </div>
+</div>
+
+<!-- ========== JADWALKA / CALENDAR ========== -->
+<div class="page" id="page-calendar">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="cal-h">Jadwalka Sannadlaha</h1>
+    <p id="cal-sub">Ramadan, Ciidaha, iyo xafladaha muhiimka ah.</p>
+  </div></div>
+  <div class="wrap-sm">
+    <!-- ADD EVENT ADMIN -->
+    <div style="margin-bottom:28px;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:16px;padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <h3 id="cal-add-h" style="font-size:15px;font-weight:700;color:var(--green)">➕ Xafladda ku dar</h3>
+        <button onclick="toggleForm('cal-form','cal-form-btn',CAL_L)" id="cal-form-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">➕ Ku dar</button>
+      </div>
+      <div id="cal-form" style="display:none">
+        <div style="display:grid;gap:10px">
+          <input id="cf-title" type="text" id="cf-title-ph" placeholder="Magaca xafladda..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <input id="cf-date" type="date" style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <select id="cf-cat" style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%">
+            <option value="ramadan">🌙 Ramadan</option>
+            <option value="eid">🎉 Ciid</option>
+            <option value="lecture">📖 Dars</option>
+            <option value="community">🤝 Bulsho</option>
+            <option value="other">📅 Kale</option>
+          </select>
+          <textarea id="cf-desc" rows="2" id="cf-desc-ph" placeholder="Faahfaahin..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%;resize:vertical"></textarea>
+          <div style="display:flex;gap:8px">
+            <button onclick="addCalEvent()" style="background:var(--green2);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="cal-save-btn">💾 Kaydi</button>
+            <button onclick="toggleForm('cal-form','cal-form-btn',CAL_L)" id="cal-cancel-btn" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CALENDAR LIST -->
+    <div id="cal-list" style="display:flex;flex-direction:column;gap:12px"></div>
+    <p id="cal-empty" style="display:none;text-align:center;color:var(--stone);padding:48px 0;font-size:15px">Wali xafladdo lama darin.</p>
+  </div>
+</div>
+
+<!-- ========== HAYADA / COMMITTEE ========== -->
+<div class="page" id="page-committee">
+  <div class="pg-hdr"><div class="pg-hdr-inner">
+    <h1 id="com-h">Hayada Masaajidka</h1>
+    <p id="com-sub">Maamulka iyo xubnahayada mas'uulka ah.</p>
+  </div></div>
+  <div class="wrap-sm">
+    <!-- ADD MEMBER ADMIN -->
+    <div style="margin-bottom:28px;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:16px;padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <h3 id="com-add-h" style="font-size:15px;font-weight:700;color:var(--green)">➕ Xubin ku dar</h3>
+        <button onclick="toggleForm('com-form','com-form-btn',COM_L)" id="com-form-btn" style="background:var(--green);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">➕ Ku dar</button>
+      </div>
+      <div id="com-form" style="display:none">
+        <div style="display:grid;gap:10px">
+          <input id="mf2-name" type="text" id="mf2-name-ph" placeholder="Magaca xubinka..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <input id="mf2-role" type="text" id="mf2-role-ph" placeholder="Xilka: Guddoomiye, Xoghaye..." style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <input id="mf2-phone" type="tel" id="mf2-phone-ph" placeholder="📞 Telefon (ikhtiyaari)" style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <input id="mf2-email" type="email" id="mf2-email-ph" placeholder="📧 Email (ikhtiyaari)" style="padding:9px 12px;border:1px solid #bbf7d0;border-radius:8px;font-size:14px;width:100%"/>
+          <div style="display:flex;gap:8px">
+            <button onclick="addMember()" style="background:var(--green2);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex:1" id="com-save-btn">💾 Kaydi</button>
+            <button onclick="toggleForm('com-form','com-form-btn',COM_L)" id="com-cancel-btn" style="background:#fff;color:var(--stone2);border:1px solid #d1d5db;padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer">Jooji</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MEMBERS GRID -->
+    <div id="com-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px"></div>
+    <p id="com-empty" style="display:none;text-align:center;color:var(--stone);padding:48px 0;font-size:15px">Wali xubno lama darin.</p>
+  </div>
+</div>
+
 <!-- ========== CONTACT ========== -->
 <div class="page" id="page-contact">
   <div class="pg-hdr"><div class="pg-hdr-inner">
-    <h1 id="con-h">Nala soo Xiriir</h1>
+    <h1 id="con-h"></h1>
     <p id="con-sub"></p>
   </div></div>
   <div class="wrap-sm">
+    <!-- XIRIIRKA DEGDEGGA -->
+    <div style="background:linear-gradient(135deg,#022c22,#064e3b);color:#fff;border-radius:18px;padding:24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <p style="font-size:13px;color:#a7f3d0;margin-bottom:4px" id="emer-lbl">📞 Xiriirka Degdegga</p>
+        <p style="font-size:28px;font-weight:800;letter-spacing:.05em;font-family:monospace">+47 000 00 000</p>
+        <p style="font-size:13px;color:#a7f3d0;margin-top:4px" id="emer-hours">Maalinta: 09:00 – 21:00</p>
+      </div>
+      <a href="tel:+4700000000" style="background:var(--amber);color:#064e3b;padding:12px 24px;border-radius:10px;font-weight:700;font-size:15px;white-space:nowrap" id="emer-call">📞 Wac Hadda</a>
+    </div>
+
+    <!-- OGEYSIISYADA SUBSCRIPTION -->
+    <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:18px;padding:24px;margin-bottom:24px">
+      <h3 id="sub-h" style="font-size:17px;font-weight:700;color:#92400e;margin-bottom:6px">🔔 Ogeysiisyada Hel</h3>
+      <p id="sub-desc" style="font-size:14px;color:#78350f;margin-bottom:16px;line-height:1.6">Geli emailkaaga si aad u hesho ogeysiisyada cusub — waqtiyada, munaasabadaha iyo wararka.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="sub-email" type="email" placeholder="example@email.com" style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #fde68a;border-radius:8px;font-size:14px;background:#fff"/>
+        <button onclick="subscribeEmail()" id="sub-btn" style="background:#92400e;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap">✉️ Subscribe</button>
+      </div>
+      <div id="sub-msg" style="display:none;margin-top:10px;background:#dcfce7;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;font-weight:600"></div>
+
+      <!-- WHATSAPP -->
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #fde68a;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <p id="wa-join-h" style="font-size:14px;font-weight:600;color:#78350f">📱 WhatsApp Group</p>
+          <p id="wa-join-d" style="font-size:13px;color:#92400e">Ku soo biir kooxda rasmi ah ee WhatsApp</p>
+        </div>
+        <a href="https://wa.me/4700000000" target="_blank" style="background:#16a34a;color:#fff;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:600;white-space:nowrap" id="wa-btn">📱 WhatsApp</a>
+      </div>
+    </div>
+
     <div class="con-grid" id="con-grid"></div>
 
     <!-- GOOGLE MAP -->
     <div style="margin-top:40px">
       <h3 id="map-h" style="font-size:18px;font-weight:700;color:var(--green);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #bbf7d0">
-        📍 Halkaan ayaan ku taal
+        📍 <span id="map-h-txt">Halkaan ayaan ku taal</span>
       </h3>
       <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);border:1px solid #e7e5e4">
         <iframe
@@ -581,7 +740,7 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
       <p class="ft-desc" id="ft-desc"></p>
     </div>
     <div class="ft-col">
-      <h4 id="ft-con">Xiriir</h4>
+      <h4 id="ft-con"></h4>
       <p>📍 Arendal, Norge<br>📧 info@arendal-moske.no</p>
     </div>
     <div class="ft-col">
@@ -599,8 +758,8 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 const T = {
 so:{
   flag:'🇸🇴',label:'Soomaali',dir:'ltr',locale:'so-SO',
-  nav:['Bogga Hore','Ku Saabsan','Waqtiyada','Munaasabadaha','Deeq','Sawirrada','Ducooyin','Muxaadarooyinka','Xiriir'],
-  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
+  nav:['Bogga Hore','Ku Saabsan','Waqtiyada','Munaasabadaha','Wararka','Jadwalka','Hayada','Deeq','Sawirrada','Ducooyin','Muxaadarooyinka','Xiriir'],
+  pages:['home','about','prayer','events','news','calendar','committee','donate','gallery','duco','media','contact'],
   donate_nav:'Deeq',
   brand:'Arendal Moske',
   h_sub:'Xarunteena diineed — meel aan ku tukano, ku barano, kuna isku xirno bulshadeena Muslimka ah ee Arendal.',
@@ -658,8 +817,8 @@ so:{
 },
 no:{
   flag:'🇳🇴',label:'Norsk',dir:'ltr',locale:'nb-NO',
-  nav:['Hjem','Om oss','Bønnetider','Arrangementer','Donasjon','Galleri','Dua','Forelesninger','Kontakt'],
-  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
+  nav:['Hjem','Om oss','Bønnetider','Arrangementer','Nyheter','Kalender','Styre','Donasjon','Galleri','Dua','Forelesninger','Kontakt'],
+  pages:['home','about','prayer','events','news','calendar','committee','donate','gallery','duco','media','contact'],
   donate_nav:'Donasjon', brand:'Arendal Moske',
   h_sub:'Vårt religiøse sentrum — et sted for bønn, læring og fellesskap for muslimene i Arendal.',
   h_cta1:'💚 Støtt moskeen', h_cta2:'Bønnetider',
@@ -716,8 +875,8 @@ no:{
 },
 en:{
   flag:'🇬🇧',label:'English',dir:'ltr',locale:'en-GB',
-  nav:['Home','About','Prayer Times','Events','Donate','Gallery','Du\'a','Lectures','Contact'],
-  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
+  nav:['Home','About','Prayer Times','Events','News','Calendar','Committee','Donate','Gallery','Du\'a','Lectures','Contact'],
+  pages:['home','about','prayer','events','news','calendar','committee','donate','gallery','duco','media','contact'],
   donate_nav:'Donate', brand:'Arendal Mosque',
   h_sub:"Our religious center — a place to pray, learn, and connect as a Muslim community in Arendal.",
   h_cta1:'💚 Support the Mosque', h_cta2:'Prayer Times',
@@ -774,8 +933,8 @@ en:{
 },
 ar:{
   flag:'🇸🇦',label:'العربية',dir:'rtl',locale:'ar-SA',
-  nav:['الرئيسية','من نحن','أوقات الصلاة','الفعاليات','تبرع','معرض الصور','أدعية','المحاضرات','اتصل بنا'],
-  pages:['home','about','prayer','events','donate','gallery','duco','media','contact'],
+  nav:['الرئيسية','من نحن','أوقات الصلاة','الفعاليات','الأخبار','التقويم','الهيئة','تبرع','معرض الصور','أدعية','المحاضرات','اتصل بنا'],
+  pages:['home','about','prayer','events','news','calendar','committee','donate','gallery','duco','media','contact'],
   donate_nav:'تبرع', brand:'مسجد أريندال',
   h_sub:'مركزنا الديني — مكان للصلاة والتعلم والتواصل لمجتمع المسلمين في أريندال.',
   h_cta1:'💚 ادعم المسجد', h_cta2:'أوقات الصلاة',
@@ -965,6 +1124,9 @@ function render(){
   setText('ft-fol',d.ft_fol); setText('ft-rights',d.ft_rights);
   renderDuco();
   renderMedia();
+  renderAll();
+  renderPrayerPage();
+  applyUILabels();
 }
 
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
@@ -1038,6 +1200,287 @@ function renderDuco(){
       <p style="font-size:12px;color:var(--stone);text-align:right">${du.ar_tr}</p>
     </div>`;
   }).join('');
+}
+
+/* ===== SHARED HELPERS ===== */
+/* ===== UI LABELS — ALL LANGUAGES ===== */
+const UI_L = {
+  so:{
+    cancel:'Jooji', confirm_del:'Ma hubtaa?', confirm_del_media:'Ma hubtaa in aad tireyso?',
+    alert_news:'Cinwaanka iyo qoraalka geli!', alert_cal:'Cinwaanka iyo taariikhda geli!',
+    alert_member:'Magaca iyo xilka geli!', alert_media:'Cinwaanka iyo link-ka waa muhiim!',
+    alert_email:'Email sax ah geli!',
+    ph_news_title:'Cinwaanka warka...', ph_news_body:'Qoraalka warku...',
+    ph_cal_title:'Magaca xafladda...', ph_cal_desc:'Faahfaahin...',
+    ph_member_name:'Magaca xubinka...', ph_member_role:'Xilka: Guddoomiye, Xoghaye...',
+    ph_member_phone:'📞 Telefon (ikhtiyaari)', ph_member_email:'📧 Iimaylka (ikhtiyaari)',
+    ph_sheikh:'Sheekh Maxamed...',
+    map_h:'📍 Halkaan ayaan ku taal', map_open:'Google Maps ku fur',
+  },
+  no:{
+    cancel:'Avbryt', confirm_del:'Er du sikker?', confirm_del_media:'Er du sikker på at du vil slette?',
+    alert_news:'Fyll inn tittel og innhold!', alert_cal:'Fyll inn tittel og dato!',
+    alert_member:'Fyll inn navn og rolle!', alert_media:'Tittel og lenke er påkrevd!',
+    alert_email:'Skriv inn en gyldig e-postadresse!',
+    ph_news_title:'Nyhetsoverskrift...', ph_news_body:'Nyhetsinnhold...',
+    ph_cal_title:'Navn på arrangement...', ph_cal_desc:'Beskrivelse...',
+    ph_member_name:'Navn...', ph_member_role:'Rolle: Leder, Sekretær...',
+    ph_member_phone:'📞 Telefon (valgfritt)', ph_member_email:'📧 E-post (valgfritt)',
+    ph_sheikh:'Sjekh Muhammed...',
+    map_h:'📍 Her finner du oss', map_open:'Åpne i Google Maps',
+  },
+  en:{
+    cancel:'Cancel', confirm_del:'Are you sure?', confirm_del_media:'Are you sure you want to delete?',
+    alert_news:'Please fill in title and content!', alert_cal:'Please fill in title and date!',
+    alert_member:'Please fill in name and role!', alert_media:'Title and link are required!',
+    alert_email:'Please enter a valid email address!',
+    ph_news_title:'News headline...', ph_news_body:'News content...',
+    ph_cal_title:'Event name...', ph_cal_desc:'Description...',
+    ph_member_name:'Name...', ph_member_role:'Role: Chairman, Secretary...',
+    ph_member_phone:'📞 Phone (optional)', ph_member_email:'📧 Email (optional)',
+    ph_sheikh:'Sheikh Mohammed...',
+    map_h:'📍 Find us here', map_open:'Open in Google Maps',
+  },
+  ar:{
+    cancel:'إلغاء', confirm_del:'هل أنت متأكد؟', confirm_del_media:'هل تريد الحذف؟',
+    alert_news:'يرجى ملء العنوان والمحتوى!', alert_cal:'يرجى ملء العنوان والتاريخ!',
+    alert_member:'يرجى ملء الاسم والدور!', alert_media:'العنوان والرابط مطلوبان!',
+    alert_email:'يرجى إدخال عنوان بريد إلكتروني صحيح!',
+    ph_news_title:'عنوان الخبر...', ph_news_body:'محتوى الخبر...',
+    ph_cal_title:'اسم الفعالية...', ph_cal_desc:'الوصف...',
+    ph_member_name:'الاسم...', ph_member_role:'الدور: رئيس، سكرتير...',
+    ph_member_phone:'📞 الهاتف (اختياري)', ph_member_email:'📧 البريد الإلكتروني (اختياري)',
+    ph_sheikh:'الشيخ محمد...',
+    map_h:'📍 موقعنا', map_open:'افتح في Google Maps',
+  },
+};
+
+function applyUILabels(){
+  const u = UI_L[lang];
+  // placeholders
+  const setph = (id,v)=>{ const el=document.getElementById(id); if(el)el.placeholder=v; };
+  setph('nf-title', u.ph_news_title); setph('nf-body', u.ph_news_body);
+  setph('cf-title', u.ph_cal_title);  setph('cf-desc', u.ph_cal_desc);
+  setph('mf2-name', u.ph_member_name); setph('mf2-role', u.ph_member_role);
+  setph('mf2-phone', u.ph_member_phone); setph('mf2-email', u.ph_member_email);
+  setph('mf-sheikh', u.ph_sheikh);
+  // cancel buttons
+  const setTxt = (id,v)=>{ const el=document.getElementById(id); if(el)el.textContent=v; };
+  setTxt('med-cancel-btn', u.cancel);
+  // map
+  const mapH = document.getElementById('map-h-txt'); if(mapH) mapH.textContent = u.map_h.replace('📍 ','');
+  const mapO = document.getElementById('map-open'); if(mapO) mapO.textContent = u.map_open;
+}
+
+function toggleForm(formId, btnId, labels){
+  const f=document.getElementById(formId);
+  const b=document.getElementById(btnId);
+  if(!f||!b) return;
+  const open=f.style.display==='none'||f.style.display==='';
+  f.style.display=open?'grid':'none';
+  b.textContent=open?'✕ Xir':(labels?labels[lang].add_btn:'➕ Ku dar');
+}
+function delItem(key, id){ 
+  if(!confirm(UI_L[lang].confirm_del)) return;
+  const arr=(JSON.parse(localStorage.getItem(key))||[]).filter(x=>x.id!==id);
+  localStorage.setItem(key,JSON.stringify(arr));
+  renderAll();
+}
+
+/* ===== NEWS ===== */
+const NEWS_L = {
+  so:{ h:'Wararka', sub:'Wararka iyo ogeysiisyada cusub ee Masaajidka.', add_h:'➕ War cusub ku dar', save:'💾 Kaydi', empty:'Wali war lama darin.', del:'Tir', add_btn:'➕ Ku dar', saved:'✅ Warku si guul ah ayaa loo kaydiyay!' },
+  no:{ h:'Nyheter', sub:'Siste nyheter og kunngjøringer fra moskeen.', add_h:'➕ Legg til nyhet', save:'💾 Lagre', empty:'Ingen nyheter ennå.', del:'Slett', add_btn:'➕ Legg til', saved:'✅ Nyheten ble lagret!' },
+  en:{ h:'News', sub:'Latest news and announcements from the Mosque.', add_h:'➕ Add news', save:'💾 Save', empty:'No news added yet.', del:'Delete', add_btn:'➕ Add', saved:'✅ News saved successfully!' },
+  ar:{ h:'الأخبار', sub:'آخر الأخبار والإعلانات من المسجد.', add_h:'➕ إضافة خبر', save:'💾 حفظ', empty:'لا توجد أخبار بعد.', del:'حذف', add_btn:'➕ إضافة', saved:'✅ تم حفظ الخبر بنجاح!' },
+};
+function addNews(){
+  const title=document.getElementById('nf-title').value.trim();
+  const body=document.getElementById('nf-body').value.trim();
+  if(!title||!body){ alert(UI_L[lang].alert_news); return; }
+  const arr=JSON.parse(localStorage.getItem('arendal_news')||'[]');
+  arr.unshift({id:Date.now(),title,body,date:new Date().toLocaleDateString()});
+  localStorage.setItem('arendal_news',JSON.stringify(arr));
+  document.getElementById('nf-title').value='';
+  document.getElementById('nf-body').value='';
+  toggleForm('news-form','news-form-btn',NEWS_L);
+  renderNews();
+}
+function renderNews(){
+  const d=NEWS_L[lang];
+  setText('news-h',d.h); setText('news-sub',d.sub); setText('news-add-h',d.add_h);
+  setText('news-save-btn',d.save); 
+  const el=document.getElementById('news-form-btn');
+  if(el && (document.getElementById('news-form').style.display==='none'||document.getElementById('news-form').style.display==='')) el.textContent=d.add_btn;
+  const arr=JSON.parse(localStorage.getItem('arendal_news')||'[]');
+  const list=document.getElementById('news-list');
+  const empty=document.getElementById('news-empty');
+  if(!arr.length){ if(list)list.innerHTML=''; if(empty){empty.style.display='block';empty.textContent=d.empty;} return; }
+  if(empty)empty.style.display='none';
+  if(list)list.innerHTML=arr.map(n=>`
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:14px;padding:22px">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span style="background:#ecfdf5;color:var(--green2);border-radius:12px;padding:2px 10px;font-size:11px;font-weight:600">📰 ${n.date}</span>
+          </div>
+          <h3 style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:6px">${n.title}</h3>
+          <p style="font-size:14px;color:var(--stone2);line-height:1.65">${n.body}</p>
+        </div>
+        <button onclick="delItem('arendal_news',${n.id})" style="background:none;border:none;color:#dc2626;font-size:12px;cursor:pointer;flex-shrink:0">${d.del} 🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ===== CALENDAR ===== */
+const CAL_L = {
+  so:{ h:'Jadwalka Sannadlaha', sub:'Ramadan, Ciidaha, iyo xafladaha muhiimka ah.', add_h:'➕ Xafladda ku dar', save:'💾 Kaydi', empty:'Wali xafladdo lama darin.', del:'Tir', add_btn:'➕ Ku dar',
+       cats:{ramadan:'🌙 Ramadan',eid:'🎉 Ciid',lecture:'📖 Dars',community:'🤝 Bulsho',other:'📅 Kale'} },
+  no:{ h:'Kalender', sub:'Ramadan, Eid og viktige arrangementer.', add_h:'➕ Legg til hendelse', save:'💾 Lagre', empty:'Ingen hendelser ennå.', del:'Slett', add_btn:'➕ Legg til',
+       cats:{ramadan:'🌙 Ramadan',eid:'🎉 Eid',lecture:'📖 Forelesning',community:'🤝 Fellesskap',other:'📅 Annet'} },
+  en:{ h:'Calendar', sub:'Ramadan, Eid, and important community events.', add_h:'➕ Add event', save:'💾 Save', empty:'No events added yet.', del:'Delete', add_btn:'➕ Add',
+       cats:{ramadan:'🌙 Ramadan',eid:'🎉 Eid',lecture:'📖 Lecture',community:'🤝 Community',other:'📅 Other'} },
+  ar:{ h:'التقويم', sub:'رمضان والأعياد والفعاليات المجتمعية المهمة.', add_h:'➕ إضافة حدث', save:'💾 حفظ', empty:'لا توجد أحداث بعد.', del:'حذف', add_btn:'➕ إضافة',
+       cats:{ramadan:'🌙 رمضان',eid:'🎉 عيد',lecture:'📖 محاضرة',community:'🤝 مجتمع',other:'📅 أخرى'} },
+};
+function addCalEvent(){
+  const title=document.getElementById('cf-title').value.trim();
+  const date=document.getElementById('cf-date').value;
+  const cat=document.getElementById('cf-cat').value;
+  const desc=document.getElementById('cf-desc').value.trim();
+  if(!title||!date){ alert(UI_L[lang].alert_cal); return; }
+  const arr=JSON.parse(localStorage.getItem('arendal_cal')||'[]');
+  arr.push({id:Date.now(),title,date,cat,desc});
+  arr.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  localStorage.setItem('arendal_cal',JSON.stringify(arr));
+  ['cf-title','cf-date','cf-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cf-cat').value='ramadan';
+  toggleForm('cal-form','cal-form-btn',CAL_L);
+  renderCal();
+}
+function renderCal(){
+  const d=CAL_L[lang];
+  setText('cal-h',d.h); setText('cal-sub',d.sub); setText('cal-add-h',d.add_h); setText('cal-save-btn',d.save);
+  const el=document.getElementById('cal-form-btn');
+  if(el && (document.getElementById('cal-form').style.display==='none'||document.getElementById('cal-form').style.display==='')) el.textContent=d.add_btn;
+  // update category options
+  const sel=document.getElementById('cf-cat');
+  if(sel){ const cats=['ramadan','eid','lecture','community','other']; const icons={ramadan:'🌙',eid:'🎉',lecture:'📖',community:'🤝',other:'📅'};
+    cats.forEach((c,i)=>{ if(sel.options[i]) sel.options[i].text=d.cats[c]; }); }
+  const arr=JSON.parse(localStorage.getItem('arendal_cal')||'[]');
+  const list=document.getElementById('cal-list');
+  const empty=document.getElementById('cal-empty');
+  if(!arr.length){ if(list)list.innerHTML=''; if(empty){empty.style.display='block';empty.textContent=d.empty;} return; }
+  if(empty)empty.style.display='none';
+  const today=new Date(); today.setHours(0,0,0,0);
+  if(list)list.innerHTML=arr.map(e=>{
+    const evDate=new Date(e.date);
+    const past=evDate<today;
+    const catLabel=d.cats[e.cat]||e.cat;
+    const color={ramadan:'#fef3c7',eid:'#dcfce7',lecture:'#dbeafe',community:'#f3e8ff',other:'#f5f5f4'}[e.cat]||'#f5f5f4';
+    const badge=`<span style="background:${color};padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600">${catLabel}</span>`;
+    return `<div style="background:#fff;border:1px solid ${past?'#e7e5e4':'#bbf7d0'};border-radius:12px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start;opacity:${past?'.55':'1'}">
+      <div style="background:${past?'#f5f5f4':'#ecfdf5'};border-radius:10px;padding:10px 14px;text-align:center;flex-shrink:0;min-width:60px">
+        <div style="font-size:11px;color:var(--stone);font-weight:500">${evDate.toLocaleDateString(undefined,{month:'short'})}</div>
+        <div style="font-size:22px;font-weight:800;color:${past?'var(--stone)':'var(--green)'}">${evDate.getDate()}</div>
+      </div>
+      <div style="flex:1">
+        <div style="margin-bottom:5px">${badge}</div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:3px">${e.title}</h3>
+        ${e.desc?`<p style="font-size:13px;color:var(--stone2)">${e.desc}</p>`:''}
+      </div>
+      <button onclick="delItem('arendal_cal',${e.id})" style="background:none;border:none;color:#dc2626;font-size:12px;cursor:pointer;flex-shrink:0">${d.del} 🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+/* ===== COMMITTEE ===== */
+const COM_L = {
+  so:{ h:'Hayada Masaajidka', sub:'Maamulka iyo xubnahayada mas'uulka ah.', add_h:'➕ Xubin ku dar', save:'💾 Kaydi', empty:'Wali xubno lama darin.', del:'Tir', add_btn:'➕ Ku dar' },
+  no:{ h:'Styret', sub:'Ledelsen og ansvarlige medlemmer.', add_h:'➕ Legg til medlem', save:'💾 Lagre', empty:'Ingen medlemmer ennå.', del:'Slett', add_btn:'➕ Legg til' },
+  en:{ h:'Committee', sub:'Management and responsible members.', add_h:'➕ Add member', save:'💾 Save', empty:'No members added yet.', del:'Delete', add_btn:'➕ Add' },
+  ar:{ h:'الهيئة الإدارية', sub:'الإدارة والأعضاء المسؤولون.', add_h:'➕ إضافة عضو', save:'💾 حفظ', empty:'لا يوجد أعضاء بعد.', del:'حذف', add_btn:'➕ إضافة' },
+};
+function addMember(){
+  const name=document.getElementById('mf2-name').value.trim();
+  const role=document.getElementById('mf2-role').value.trim();
+  const phone=document.getElementById('mf2-phone').value.trim();
+  const email=document.getElementById('mf2-email').value.trim();
+  if(!name||!role){ alert(UI_L[lang].alert_member); return; }
+  const arr=JSON.parse(localStorage.getItem('arendal_committee')||'[]');
+  arr.push({id:Date.now(),name,role,phone,email});
+  localStorage.setItem('arendal_committee',JSON.stringify(arr));
+  ['mf2-name','mf2-role','mf2-phone','mf2-email'].forEach(id=>document.getElementById(id).value='');
+  toggleForm('com-form','com-form-btn',COM_L);
+  renderCommittee();
+}
+function renderCommittee(){
+  const d=COM_L[lang];
+  setText('com-h',d.h); setText('com-sub',d.sub); setText('com-add-h',d.add_h); setText('com-save-btn',d.save);
+  const el=document.getElementById('com-form-btn');
+  if(el && (document.getElementById('com-form').style.display==='none'||document.getElementById('com-form').style.display==='')) el.textContent=d.add_btn;
+  const arr=JSON.parse(localStorage.getItem('arendal_committee')||'[]');
+  const grid=document.getElementById('com-grid');
+  const empty=document.getElementById('com-empty');
+  if(!arr.length){ if(grid)grid.innerHTML=''; if(empty){empty.style.display='block';empty.textContent=d.empty;} return; }
+  if(empty)empty.style.display='none';
+  if(grid)grid.innerHTML=arr.map(m=>`
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:14px;padding:22px;text-align:center;position:relative">
+      <button onclick="delItem('arendal_committee',${m.id})" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#dc2626;font-size:11px;cursor:pointer">${d.del} 🗑️</button>
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#064e3b,#10b981);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:26px;color:#fff;font-weight:700">${m.name.charAt(0).toUpperCase()}</div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--stone3);margin-bottom:4px">${m.name}</h3>
+      <p style="font-size:13px;font-weight:600;color:var(--green2);margin-bottom:10px">${m.role}</p>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        ${m.phone?`<a href="tel:${m.phone}" style="font-size:13px;color:var(--stone2)">📞 ${m.phone}</a>`:''}
+        ${m.email?`<a href="mailto:${m.email}" style="font-size:13px;color:var(--stone2)">📧 ${m.email}</a>`:''}
+      </div>
+    </div>`).join('');
+}
+
+/* ===== SUBSCRIBE + EMERGENCY ===== */
+const CON_EXTRA = {
+  so:{ emer_lbl:'📞 Xiriirka Degdegga', emer_hours:'Maalinta: 09:00 – 21:00', emer_call:'📞 Wac Hadda',
+       sub_h:'🔔 Ogeysiisyada Hel', sub_desc:'Geli emailkaaga si aad u hesho ogeysiisyada cusub.', sub_btn:'✉️ Subscribe',
+       sub_ok:'✅ Si guul ah ayaa loo diiwaan geliyay! Waad ku mahadsan tahay.', sub_ph:'example@email.com',
+       wa_h:'📱 WhatsApp Group', wa_d:'Ku soo biir kooxda rasmi ah ee WhatsApp', wa_btn:'📱 WhatsApp' },
+  no:{ emer_lbl:'📞 Nødkontakt', emer_hours:'Hverdager: 09:00 – 21:00', emer_call:'📞 Ring nå',
+       sub_h:'🔔 Få varsler', sub_desc:'Skriv inn e-posten din for å motta oppdateringer.', sub_btn:'✉️ Abonner',
+       sub_ok:'✅ Du er nå registrert! Takk.', sub_ph:'eksempel@epost.no',
+       wa_h:'📱 WhatsApp-gruppe', wa_d:'Bli med i vår offisielle WhatsApp-gruppe', wa_btn:'📱 WhatsApp' },
+  en:{ emer_lbl:'📞 Emergency Contact', emer_hours:'Daily: 09:00 – 21:00', emer_call:'📞 Call Now',
+       sub_h:'🔔 Get Notifications', sub_desc:'Enter your email to receive updates and announcements.', sub_btn:'✉️ Subscribe',
+       sub_ok:'✅ You are now registered! Thank you.', sub_ph:'example@email.com',
+       wa_h:'📱 WhatsApp Group', wa_d:'Join our official WhatsApp group', wa_btn:'📱 WhatsApp' },
+  ar:{ emer_lbl:'📞 اتصال الطوارئ', emer_hours:'يومياً: 09:00 – 21:00', emer_call:'📞 اتصل الآن',
+       sub_h:'🔔 احصل على إشعارات', sub_desc:'أدخل بريدك الإلكتروني لتلقي التحديثات والإعلانات.', sub_btn:'✉️ اشترك',
+       sub_ok:'✅ تم تسجيلك بنجاح! شكراً.', sub_ph:'مثال@بريد.com',
+       wa_h:'📱 مجموعة واتساب', wa_d:'انضم إلى مجموعة واتساب الرسمية', wa_btn:'📱 واتساب' },
+};
+function subscribeEmail(){
+  const email=document.getElementById('sub-email').value.trim();
+  if(!email||!email.includes('@')){ alert(UI_L[lang].alert_email); return; }
+  const arr=JSON.parse(localStorage.getItem('arendal_subs')||'[]');
+  if(!arr.includes(email)){ arr.push(email); localStorage.setItem('arendal_subs',JSON.stringify(arr)); }
+  document.getElementById('sub-email').value='';
+  const msg=document.getElementById('sub-msg');
+  msg.textContent=CON_EXTRA[lang].sub_ok;
+  msg.style.display='block';
+  setTimeout(()=>msg.style.display='none',3000);
+}
+function renderConExtra(){
+  const d=CON_EXTRA[lang];
+  setText('emer-lbl',d.emer_lbl); setText('emer-hours',d.emer_hours); setText('emer-call',d.emer_call);
+  setText('sub-h',d.sub_h); setText('sub-desc',d.sub_desc); setText('sub-btn',d.sub_btn);
+  setText('wa-join-h',d.wa_h); setText('wa-join-d',d.wa_d); setText('wa-btn',d.wa_btn);
+  const ph=document.getElementById('sub-email'); if(ph) ph.placeholder=d.sub_ph;
+}
+function renderAll(){
+  renderNews(); renderCal(); renderCommittee(); renderConExtra();
+  applyUILabels();
+  // cancel buttons for news/cal/committee
+  const u = UI_L[lang];
+  const setTxt=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  setTxt('news-cancel-btn',u.cancel); setTxt('cal-cancel-btn',u.cancel); setTxt('com-cancel-btn',u.cancel);
 }
 
 /* ===== MEDIA: MUXAADAROOYINKA ===== */
@@ -1119,7 +1562,7 @@ function addMedia(){
   const type=document.getElementById('mf-type').value;
   const url=document.getElementById('mf-url').value.trim();
   const desc=document.getElementById('mf-desc').value.trim();
-  if(!title||!url){ alert('Cinwaanka iyo link-ka waa muhiim!'); return; }
+  if(!title||!url){ alert(UI_L[lang].alert_media); return; }
   const arr=loadMedia();
   arr.unshift({ id:Date.now(), title, sheikh, type, url, desc, date: new Date().toLocaleDateString() });
   saveMedia(arr);
@@ -1133,7 +1576,7 @@ function addMedia(){
 }
 
 function deleteMedia(id){
-  if(!confirm('Ma hubtaa in aad tireyso?')) return;
+  if(!confirm(UI_L[lang].confirm_del_media)) return;
   saveMedia(loadMedia().filter(m=>m.id!==id));
   renderMedia();
 }
@@ -1152,8 +1595,14 @@ function renderMedia(){
   setText('med-lbl-title',d.lbl_title); setText('med-lbl-sheikh',d.lbl_sheikh);
   setText('med-lbl-type',d.lbl_type); setText('med-lbl-url',d.lbl_url);
   setText('med-lbl-desc',d.lbl_desc); setText('med-url-hint',d.url_hint);
-  setText('med-save-btn',d.save); setText('med-form-btn', document.getElementById('media-form').style.display==='none'?d.add_btn:'✕ Xir');
-  setText('flt-all',d.flt_all); setText('flt-video',d.flt_video); setText('flt-audio',d.flt_audio);
+  setText('med-save-btn',d.save);
+  const medForm = document.getElementById('media-form');
+  const medFormOpen = medForm && (medForm.style.display!=='none');
+  setText('med-form-btn', medFormOpen ? (PR_L[lang]?PR_L[lang].close:'✕') : d.add_btn);
+  setText('med-cancel-btn', UI_L[lang].cancel);
+  const medSavedTxt = document.getElementById('med-saved-txt'); if(medSavedTxt) medSavedTxt.textContent=d.saved;
+  const fltAllTxt = document.getElementById('flt-all-txt'); if(fltAllTxt) fltAllTxt.textContent=d.flt_all.replace('🎬 ','');
+  setText('flt-video',d.flt_video); setText('flt-audio',d.flt_audio); const fa=document.getElementById('flt-all'); if(fa)fa.innerHTML='🎬 <span id="flt-all-txt">'+d.flt_all.replace('🎬 ','')+'</span>';
   const opt=document.getElementById('mf-type');
   if(opt){ opt.options[0].text=d.type_video; opt.options[1].text=d.type_audio; }
   // render cards
@@ -1183,64 +1632,217 @@ function renderMedia(){
   ).join('');
 }
 
-/* ===== XILLIYADA SALAADDA - EDITABLE ===== */
-const DEFAULT_TIMES = {fajr:'03:00',dhuhr:'13:15',asr:'17:30',maghrib:'22:45',isha:'00:00'};
-const PRAYER_NAMES  = [
-  {key:'fajr',   icon:'🌅', name:'Fajr'},
-  {key:'dhuhr',  icon:'☀️', name:'Dhuhr'},
-  {key:'asr',    icon:'🌤️', name:'Asr'},
-  {key:'maghrib',icon:'🌇', name:'Maghrib'},
-  {key:'isha',   icon:'🌙', name:'Isha'},
+/* ===== PRAYER TIMES SYSTEM ===== */
+
+// Prayer names — universal (no language)
+const PR_NAMES = [
+  {key:'fajr',    icon:'🌅', name:'Fajr'},
+  {key:'dhuhr',   icon:'☀️', name:'Dhuhr'},
+  {key:'asr',     icon:'🌤️', name:'Asr'},
+  {key:'maghrib', icon:'🌇', name:'Maghrib'},
+  {key:'isha',    icon:'🌙', name:'Isha'},
 ];
 
-function loadTimes(){
-  try{ return JSON.parse(localStorage.getItem('arendal_prayer_times'))||DEFAULT_TIMES; }
-  catch(e){ return DEFAULT_TIMES; }
+// Default times per season
+const SEASONS = {
+  winter:  {fajr:'06:50',dhuhr:'12:30',asr:'14:15',maghrib:'16:00',isha:'17:45', fajr_iq:'07:00',dhuhr_iq:'12:45',asr_iq:'14:30',maghrib_iq:'16:10',isha_iq:'18:00'},
+  spring:  {fajr:'04:30',dhuhr:'13:15',asr:'17:00',maghrib:'20:30',isha:'22:15', fajr_iq:'04:45',dhuhr_iq:'13:30',asr_iq:'17:15',maghrib_iq:'20:40',isha_iq:'22:30'},
+  summer:  {fajr:'02:45',dhuhr:'13:30',asr:'18:00',maghrib:'23:00',isha:'00:30', fajr_iq:'03:00',dhuhr_iq:'13:45',asr_iq:'18:15',maghrib_iq:'23:10',isha_iq:'00:45'},
+  autumn:  {fajr:'05:15',dhuhr:'13:00',asr:'15:30',maghrib:'18:30',isha:'20:00', fajr_iq:'05:30',dhuhr_iq:'13:15',asr_iq:'15:45',maghrib_iq:'18:40',isha_iq:'20:15'},
+  ramadan: {fajr:'03:30',dhuhr:'13:15',asr:'17:30',maghrib:'21:45',isha:'23:15', fajr_iq:'03:45',dhuhr_iq:'13:30',asr_iq:'17:45',maghrib_iq:'21:55',isha_iq:'23:30'},
+};
+
+// Labels per language
+const PR_L = {
+  so:{ h:'Waqtiyada Salaadda', date_lbl:'Maanta', localtime:'Saacadda hadda', next_lbl:'Salaadda xigta',
+       season_lbl:'Xilli:', save:'💾 Kaydi', cancel:'Jooji', edit:'✏️ Beddel', close:'✕ Xir',
+       saved:'✅ Waqtiyada si guul ah ayaa loo kaydiyay!',
+       ssn:{winter:'❄️ Jiilaal',spring:'🌸 Gu',summer:'☀️ Xagaa',autumn:'🍂 Dayr',ramadan:'🌙 Ramadan'},
+       admin_title:'✏️ Waqtiyada beddel', note:'Waqtiyadu way isbeddeli karaan.',
+       ju_t:'🕌 Salaadda Jimcaha', ju_d:'Khudbada: <strong>13:00</strong> · Salaadda: <strong>13:30</strong>',
+       th_pr:'Salaad', th_ad:'Adhan', th_iq:'Iqaamah', th_adhan_lbl:'Adhan', th_iqama_lbl:'Iqaamah' },
+  no:{ h:'Bønnetider', date_lbl:'I dag', localtime:'Nåværende tid', next_lbl:'Neste bønn',
+       season_lbl:'Sesong:', save:'💾 Lagre', cancel:'Avbryt', edit:'✏️ Endre', close:'✕ Lukk',
+       saved:'✅ Bønnetidene er lagret!',
+       ssn:{winter:'❄️ Vinter',spring:'🌸 Vår',summer:'☀️ Sommer',autumn:'🍂 Høst',ramadan:'🌙 Ramadan'},
+       admin_title:'✏️ Endre bønnetider', note:'Tidene kan endres. Sjekk WhatsApp.',
+       ju_t:'🕌 Fredagsbønn', ju_d:'Khutbah: <strong>13:00</strong> · Bønn: <strong>13:30</strong>',
+       th_pr:'Bønn', th_ad:'Adhan', th_iq:'Iqamah', th_adhan_lbl:'Adhan', th_iqama_lbl:'Iqamah' },
+  en:{ h:'Prayer Times', date_lbl:'Today', localtime:'Current time', next_lbl:'Next prayer',
+       season_lbl:'Season:', save:'💾 Save', cancel:'Cancel', edit:'✏️ Edit', close:'✕ Close',
+       saved:'✅ Prayer times saved successfully!',
+       ssn:{winter:'❄️ Winter',spring:'🌸 Spring',summer:'☀️ Summer',autumn:'🍂 Autumn',ramadan:'🌙 Ramadan'},
+       admin_title:'✏️ Edit prayer times', note:'Times may change. Check our WhatsApp.',
+       ju_t:"🕌 Jumu'ah Prayer", ju_d:'Khutbah: <strong>13:00</strong> · Prayer: <strong>13:30</strong>',
+       th_pr:'Prayer', th_ad:'Adhan', th_iq:'Iqamah', th_adhan_lbl:'Adhan', th_iqama_lbl:'Iqamah' },
+  ar:{ h:'أوقات الصلاة', date_lbl:'اليوم', localtime:'الوقت الآن', next_lbl:'الصلاة القادمة',
+       season_lbl:'الموسم:', save:'💾 حفظ', cancel:'إلغاء', edit:'✏️ تعديل', close:'✕ إغلاق',
+       saved:'✅ تم حفظ أوقات الصلاة!',
+       ssn:{winter:'❄️ شتاء',spring:'🌸 ربيع',summer:'☀️ صيف',autumn:'🍂 خريف',ramadan:'🌙 رمضان'},
+       admin_title:'✏️ تعديل أوقات الصلاة', note:'قد تتغير الأوقات. تحقق من واتساب.',
+       ju_t:'🕌 صلاة الجمعة', ju_d:'الخطبة: <strong>13:00</strong> · الصلاة: <strong>13:30</strong>',
+       th_pr:'الصلاة', th_ad:'الأذان', th_iq:'الإقامة', th_adhan_lbl:'الأذان', th_iqama_lbl:'الإقامة' },
+};
+
+let curSeason = localStorage.getItem('arendal_season') || 'winter';
+
+function getSeasonTimes(){
+  try{
+    const saved = JSON.parse(localStorage.getItem('arendal_times_'+curSeason));
+    return saved || SEASONS[curSeason];
+  } catch(e){ return SEASONS[curSeason]; }
 }
 
-function renderXilliyada(){
-  const times = loadTimes();
-  const tbody = document.getElementById('xilliyada-body');
-  if(!tbody) return;
-  tbody.innerHTML = PRAYER_NAMES.map((p,i)=>`
-    <tr style="${i%2?'background:#fafaf9':''}">
-      <td style="padding:12px 18px;border-bottom:${i<4?'1px solid #f5f5f4':'none'};font-weight:500">${p.icon} ${p.name}</td>
-      <td style="padding:12px 18px;border-bottom:${i<4?'1px solid #f5f5f4':'none'};text-align:right;font-family:monospace;font-size:18px;font-weight:700;color:var(--green2)">${times[p.key]}</td>
-    </tr>`
-  ).join('');
+function setSeason(s){
+  curSeason = s;
+  localStorage.setItem('arendal_season', s);
+  renderPrayerPage();
+  applyUILabels();
+}
+
+function timeToMins(t){
+  if(!t) return 0;
+  const [h,m] = t.split(':').map(Number);
+  return h*60+m;
+}
+
+function minsToStr(m){
+  const h = Math.floor(((m%1440)+1440)%1440/60);
+  const mn = ((m%1440)+1440)%1440%60;
+  return String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');
+}
+
+function startClock(){
+  function tick(){
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    const clockEl = document.getElementById('pr-clock');
+    if(clockEl) clockEl.textContent = hh+':'+mm+':'+ss;
+    updateNextPrayer(now);
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+function updateNextPrayer(now){
+  const times = getSeasonTimes();
+  const nowMins = now.getHours()*60 + now.getMinutes();
+  const prayers = PR_NAMES.map(p=>({name:p.name, icon:p.icon, mins:timeToMins(times[p.key])}));
+  let next = prayers.find(p=>p.mins > nowMins) || prayers[0];
+  let diffMins = next.mins - nowMins;
+  if(diffMins <= 0) diffMins += 1440;
+  const h = Math.floor(diffMins/60);
+  const m = diffMins%60;
+  const nameEl = document.getElementById('pr-next-name');
+  const cdEl   = document.getElementById('pr-countdown');
+  if(nameEl) nameEl.textContent = next.icon+' '+next.name;
+  if(cdEl){
+    const d = PR_L[lang];
+    cdEl.textContent = h>0 ? h+'h '+m+'m' : m+' min';
+  }
+  // highlight active row
+  PR_NAMES.forEach((p,i)=>{
+    const row = document.getElementById('pr-row-'+i);
+    if(!row) return;
+    const isNext = p.name === next.name;
+    row.style.background = isNext ? '#ecfdf5' : (i%2?'#fafaf9':'#fff');
+    row.style.fontWeight = isNext ? '700' : 'normal';
+  });
+}
+
+function renderPrayerPage(){
+  const d = PR_L[lang];
+  const times = getSeasonTimes();
+  const ta = lang==='ar'?'left':'right';
+
+  // labels
+  setText('pr-h', d.h);
+  document.getElementById('pr-date').textContent = new Date().toLocaleDateString(
+    {so:'so-SO',no:'nb-NO',en:'en-GB',ar:'ar-SA'}[lang],
+    {weekday:'long',day:'numeric',month:'long',year:'numeric'}
+  );
+  setText('pr-localtime-lbl', d.localtime);
+  setText('pr-next-lbl', d.next_lbl);
+  setText('pr-season-lbl', d.season_lbl);
+  setText('pr-note', d.note);
+  setText('th-pr', d.th_pr);
+  document.getElementById('th-ad').textContent = d.th_ad;
+  document.getElementById('th-ad').style.textAlign = ta;
+  document.getElementById('th-iq').textContent = d.th_iq;
+  document.getElementById('th-iq').style.textAlign = ta;
+  setText('ju-t', d.ju_t);
+  document.getElementById('ju-d').innerHTML = d.ju_d;
+  setText('admin-title', d.admin_title);
+  setText('pr-save-btn', d.save);
+  setText('pr-cancel-btn', d.cancel);
+  setText('th-adhan-lbl', d.th_adhan_lbl);
+  setText('th-iqama-lbl', d.th_iqama_lbl);
+  const adminBtn = document.getElementById('admin-btn');
+  if(adminBtn){
+    const panelOpen = document.getElementById('admin-panel').style.display!=='none';
+    adminBtn.textContent = panelOpen ? d.close : d.edit;
+  }
+
+  // season buttons
+  ['winter','spring','summer','autumn','ramadan'].forEach(s=>{
+    const btn = document.getElementById('ssn-'+s);
+    if(btn){ btn.textContent=d.ssn[s]; btn.classList.toggle('ssn-on', s===curSeason); }
+  });
+  const snEl = document.getElementById('admin-season-name');
+  if(snEl) snEl.textContent = d.ssn[curSeason]||'';
+
+  // prayer table
+  const tbody = document.getElementById('pr-body');
+  if(tbody){
+    tbody.innerHTML = PR_NAMES.map((p,i)=>`
+      <tr id="pr-row-${i}" style="${i%2?'background:#fafaf9':''}">
+        <td style="padding:14px 20px;border-top:1px solid #f5f5f4;font-weight:500;font-size:15px">${p.icon} ${p.name}</td>
+        <td style="padding:14px 20px;border-top:1px solid #f5f5f4;text-align:${ta};font-family:monospace;font-size:18px;font-weight:700;color:var(--green2)">${times[p.key]||'--:--'}</td>
+        <td style="padding:14px 20px;border-top:1px solid #f5f5f4;text-align:${ta};font-family:monospace;font-size:18px;font-weight:600;color:var(--stone2)">${times[p.key+'_iq']||'--:--'}</td>
+      </tr>`
+    ).join('');
+  }
 }
 
 function toggleAdmin(){
   const panel = document.getElementById('admin-panel');
+  const d = PR_L[lang];
   const isOpen = panel.style.display !== 'none';
   if(!isOpen){
-    // Load current times into inputs
-    const times = loadTimes();
-    PRAYER_NAMES.forEach(p=>{
-      const el = document.getElementById('edit-'+p.key);
-      if(el) el.value = times[p.key];
+    const times = getSeasonTimes();
+    PR_NAMES.forEach(p=>{
+      const ad = document.getElementById('edit-'+p.key);
+      const iq = document.getElementById('edit-'+p.key+'-iq');
+      if(ad) ad.value = times[p.key]||'';
+      if(iq) iq.value = times[p.key+'_iq']||'';
     });
     document.getElementById('save-msg').style.display='none';
   }
   panel.style.display = isOpen ? 'none' : 'block';
-  document.getElementById('admin-btn').textContent = isOpen ? '✏️ Waqtiyada Beddel' : '✕ Xir';
+  document.getElementById('admin-btn').textContent = isOpen ? d.edit : d.close;
 }
 
 function savePrayers(){
   const times = {};
-  PRAYER_NAMES.forEach(p=>{
-    const el = document.getElementById('edit-'+p.key);
-    times[p.key] = el && el.value ? el.value : DEFAULT_TIMES[p.key];
+  PR_NAMES.forEach(p=>{
+    const ad = document.getElementById('edit-'+p.key);
+    const iq = document.getElementById('edit-'+p.key+'-iq');
+    times[p.key]      = ad&&ad.value ? ad.value : SEASONS[curSeason][p.key];
+    times[p.key+'_iq'] = iq&&iq.value ? iq.value : SEASONS[curSeason][p.key+'_iq'];
   });
-  localStorage.setItem('arendal_prayer_times', JSON.stringify(times));
-  renderXilliyada();
+  localStorage.setItem('arendal_times_'+curSeason, JSON.stringify(times));
+  renderPrayerPage();
   const msg = document.getElementById('save-msg');
-  msg.style.display='block';
-  setTimeout(()=>{ msg.style.display='none'; toggleAdmin(); }, 1800);
+  msg.textContent = PR_L[lang].saved;
+  msg.style.display = 'block';
+  setTimeout(()=>{ msg.style.display='none'; toggleAdmin(); renderPrayerPage(); }, 1800);
 }
 
 render();
-renderXilliyada();
+startClock();
+renderPrayerPage();
 </script>
 </body>
 </html>
