@@ -23,21 +23,9 @@ header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;b
 .nav-inner{max-width:1140px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:10px;height:58px}
 .logo{font-weight:800;font-size:18px;display:flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .logo span:first-child{font-size:24px}
-.nav-links{display:none}
+.nav-links{display:flex;gap:2px;flex:1;justify-content:center}
 .nav-links a{padding:6px 10px;border-radius:6px;font-size:13px;color:#a7f3d0;transition:background .15s;white-space:nowrap}
 .nav-links a:hover,.nav-links a.on{background:rgba(255,255,255,.16);color:#fff}
-.ham-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#ecfdf5;padding:6px 12px;border-radius:6px;font-size:20px;cursor:pointer;line-height:1;display:flex;align-items:center}
-.ham-btn:hover{background:rgba(255,255,255,.22)}
-.nav-drawer{display:none;position:fixed;inset:0;z-index:200}
-.nav-drawer.open{display:block}
-.nav-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5)}
-.nav-panel{position:absolute;top:0;left:0;width:260px;height:100%;background:var(--green);overflow-y:auto;padding:16px 0}
-.nav-panel-top{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 16px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px}
-.nav-panel-brand{font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
-.nav-close{background:none;border:none;color:#a7f3d0;font-size:24px;cursor:pointer;line-height:1}
-.nav-close:hover{color:#fff}
-.nav-panel a{display:block;padding:11px 20px;font-size:14px;color:#a7f3d0;transition:background .12s}
-.nav-panel a:hover,.nav-panel a.on{background:rgba(255,255,255,.15);color:#fff}
 .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .donate-pill{background:var(--amber);color:#064e3b;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
 .donate-pill:hover{background:var(--amber2)}
@@ -53,8 +41,10 @@ header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;b
 .lang-drop button.sel{background:#dcfce7;font-weight:600}
 
 /* mobile nav */
-.mob-nav{display:none}
-.mob-nav-inner{display:none}
+.mob-nav{display:none;background:var(--green);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto}
+.mob-nav-inner{display:flex;gap:2px;padding:6px 12px;white-space:nowrap}
+.mob-nav-inner a{padding:5px 10px;border-radius:5px;font-size:12px;color:#a7f3d0}
+.mob-nav-inner a:hover,.mob-nav-inner a.on{background:rgba(255,255,255,.16);color:#fff}
 
 /* ===== PAGES ===== */
 .page{display:none;flex:1}
@@ -210,7 +200,8 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 .med-del:hover{text-decoration:underline}
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .mob-nav{display:none}
+  .nav-links{display:none}
+  .mob-nav{display:block}
   .donate-pill{display:none}
   .community-grid{grid-template-columns:1fr}
 }
@@ -244,7 +235,7 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
       </div>
     </div>
   </div>
-
+  <div class="mob-nav"><div class="mob-nav-inner" id="mobNav"></div></div>
 </header>
 
 <!-- ========== HOME ========== -->
@@ -742,18 +733,6 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 </div>
 
 <!-- FOOTER -->
-<!-- NAV DRAWER -->
-<div class="nav-drawer" id="navDrawer">
-  <div class="nav-overlay" onclick="closeNav()"></div>
-  <div class="nav-panel">
-    <div class="nav-panel-top">
-      <div class="nav-panel-brand">🕌 <span id="drawer-brand">Arendal Moske</span></div>
-      <button class="nav-close" onclick="closeNav()">✕</button>
-    </div>
-    <div id="drawerNav"></div>
-  </div>
-</div>
-
 <footer>
   <div class="ft-inner">
     <div>
@@ -1056,8 +1035,7 @@ function render(){
     `<a href="#" data-pg="${d.pages[i]}" onclick="go('${d.pages[i]}');return false">${n}</a>`
   ).join('');
   document.getElementById('deskNav').innerHTML=navHTML;
-  document.getElementById('drawerNav').innerHTML=navHTML;
-  const db=document.getElementById('drawer-brand'); if(db) db.textContent=d.brand;
+  document.getElementById('mobNav').innerHTML=navHTML;
   document.getElementById('hdr-donate').textContent=d.donate_nav;
   document.querySelectorAll('[data-pg]').forEach(a=>a.classList.toggle('on',a.dataset.pg===curPage));
 
@@ -1861,21 +1839,6 @@ function savePrayers(){
   msg.style.display = 'block';
   setTimeout(()=>{ msg.style.display='none'; toggleAdmin(); renderPrayerPage(); }, 1800);
 }
-
-function openNav(){
-  document.getElementById('navDrawer').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeNav(){
-  document.getElementById('navDrawer').classList.remove('open');
-  document.body.style.overflow='';
-}
-// Close drawer when page link clicked
-document.addEventListener('click',function(e){
-  if(e.target.closest('#drawerNav a')){
-    closeNav();
-  }
-});
 
 render();
 startClock();
