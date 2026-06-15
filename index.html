@@ -42,7 +42,7 @@ header{position:sticky;top:0;z-index:100;background:var(--green);color:#ecfdf5;b
 .lang-drop button.sel{background:#dcfce7;font-weight:600}
 
 /* mobile nav */
-.mob-nav{display:block;background:var(--green);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto;scrollbar-width:none;width:100%;clear:both}
+.mob-nav{display:none;background:var(--green);border-top:1px solid rgba(255,255,255,.1);overflow-x:auto;scrollbar-width:none;width:100%;clear:both}
 .mob-nav-inner{display:flex;gap:2px;padding:6px 12px;white-space:nowrap;overflow-x:auto;max-width:1140px;margin:0 auto}
 .mob-nav-inner a{padding:5px 9px;border-radius:5px;font-size:12px;color:#a7f3d0;white-space:nowrap;flex-shrink:0}
 .mob-nav-inner a:hover,.mob-nav-inner a.on{background:rgba(255,255,255,.16);color:#fff}
@@ -201,7 +201,7 @@ footer{background:#022c22;color:#a7f3d0;margin-top:auto}
 .med-del:hover{text-decoration:underline}
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .nav-links{display:flex}
+  .nav-links{display:none}
   .mob-nav{display:block}
   .donate-pill{display:none}
   .community-grid{grid-template-columns:1fr}
